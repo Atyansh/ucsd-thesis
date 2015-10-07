@@ -42,11 +42,11 @@ For more information go to the [project wiki page][1].
 
 Warnings
 --------
-This template has not endorced by OGS or any other official entity.
+This template has not endorsed by OGS or any other official entity.
 The official formatting guide can be obtained from
 [OGS](http://ogs.ucsd.edu/AcademicAffairs/Documents/Dissertations_Theses_Formatting_Manual.pdf).
 
-No guaranty is made that this LaTeX class conforms to the official UCSD guidelines.
+No guarantee is made that this LaTeX class conforms to the official UCSD guidelines.
 Make sure that you check the final document against the Formatting Manual.
 
 That being said, this class has been routinely used for successful
