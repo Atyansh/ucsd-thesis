@@ -1,16 +1,12 @@
-UCSD Doctoral Dissertation and Master Thesis LaTeX Classes
+UCSD Doctoral Dissertation LaTeX Class
 ======================================
-forked from https://github.com/ucsd-thesis/ucsd-thesis
-to https://github.com/jlshin/ucsd-thesis
+https://github.com/ucsd-thesis/ucsd-thesis
 
 Contents
 --------
 
-This folder should contain two subfolders:
-(1) phd-thesis
-(2) master-thesis
+This folder should contain:
 
-Both subfolders should contain:
 * **template.tex**             Primary Driver File
 * **template_frontmatter.tex** Where the title, abstract, etc. are held.
 * **ucsd.cls**                 LaTeX class file
@@ -21,7 +17,7 @@ Both subfolders should contain:
 Instructions
 ------------
 
-Download the files: https://github.com/jlshin/ucsd-thesis/archive/master.zip
+Download the files: https://github.com/ucsd-thesis/ucsd-thesis/archive/master.zip
 
 Copy all of the above files to the directory in which you plan to work.
 Look over `template.tex` to get started. If you choose to rename the tex files,
@@ -50,7 +46,7 @@ No guaranty is made that this LaTeX class conforms to the official UCSD guidelin
 Make sure that you check the final document against the Formatting Manual.
 
 That being said, this class has been routinely used for successful
-publication of doctoral and master theses.
+publication of doctoral theses.
 
 Let us know if you submit a thesis using this package.
 
