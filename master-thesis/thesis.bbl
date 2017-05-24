@@ -1,14 +1,204 @@
-\begin{thebibliography}{Mar83}
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{KTADC16}
 
-\bibitem[Mar83]{Martin_1983}
-Robert~D. Martin.
-\newblock {\em Human Brain Evolution in an Ecological Context}.
-\newblock American Museum of Natural History, 1983.
+\bibitem[CL{\etalchar{+}}99]{pbfts}
+Miguel Castro, Barbara Liskov, et~al.
+\newblock Practical byzantine fault tolerance.
+\newblock In {\em OSDI}, February 1999.
 
-\bibitem[RI99]{Rilling_Insel_1999}
-James~K. Rilling and Thomas~R. Insel.
-\newblock The primate neocortex in comparative perspective using magnetic
-  resonance imaging.
-\newblock {\em Journal of Human Evolution}, 37(2):191--223, 1999.
+\bibitem[Con14]{chrome-sale}
+Lucien Constantin.
+\newblock Spammers buy {C}hrome extensions and turn them into adware.
+\newblock
+  \url{http://www.pcworld.com/article/2089580/spammers-buy-chrome-extensions-and-turn-them-into-adware.html},
+  January 2014.
+
+\bibitem[CSBH08]{cappos:look}
+Justin Cappos, Justin Samuel, Scott Baker, and John~H Hartman.
+\newblock A look in the mirror: Attacks on package managers.
+\newblock In {\em CCS}. ACM, 2008.
+
+\bibitem[dav17]{registry-static}
+davglass.
+\newblock registry-static.
+\newblock \url{https://www.npmjs.com/package/registry-static}, January 2017.
+
+\bibitem[Eva13]{rubygems-reg-comp}
+Evan.
+\newblock Data verification.
+\newblock \url{http://blog.rubygems.org/2013/01/31/data-verification.html},
+  January 2013.
+
+\bibitem[Eva16]{googleplay-spy}
+Steve Evans.
+\newblock {Data-Stealing Malicious Apps Found in Google Play Store}.
+\newblock
+  \url{https://www.infosecurity-magazine.com/news/malicious-apps-found-in-google},
+  September 2016.
+
+\bibitem[Goo16]{googleplay-root}
+Dan Goodin.
+\newblock {“Godless” apps, some found in Google Play, can root 90% of
+  Android phones}.
+\newblock
+  \url{http://arstechnica.com/security/2016/06/godless-apps-some-found-in-google-play-root-90-of-android-phones/},
+  June 2016.
+
+\bibitem[Key17]{keybase}
+Keybase.
+\newblock What keybase is really doing.
+\newblock \url{https://keybase.io/docs/server_security}, January 2017.
+
+\bibitem[KGC{\etalchar{+}}14]{kapravelos2014hulk}
+Alexandros Kapravelos, Chris Grier, Neha Chachra, Christopher Kruegel, Giovanni
+  Vigna, and Vern Paxson.
+\newblock Hulk: Eliciting malicious behavior in browser extensions.
+\newblock In {\em USENIX Security}, August 2014.
+
+\bibitem[KTADC16]{kuppusamy2016diplomat}
+Trishank~Karthik Kuppusamy, Santiago Torres-Arias, Vladimir Diaz, and Justin
+  Cappos.
+\newblock Diplomat: Using delegations to protect community repositories.
+\newblock In {\em NSDI}, March 2016.
+
+\bibitem[Mat09]{thandy}
+Nick Mathewson.
+\newblock Thandy: Secure update for tor.
+\newblock
+  \url{https://opensource.googleblog.com/2009/03/thandy-secure-update-for-tor.html},
+  March 2009.
+
+\bibitem[Maz16]{stellar}
+David Mazieres.
+\newblock The stellar consensus protocol: A federated model for internet-level
+  consensus.
+\newblock https://www.stellar.org/papers/stellar-consensus-protocol.pdf,
+  February 2016.
+
+\bibitem[ML16]{googleplay-dresscode}
+Alon Menczer and Alexander Lysunets.
+\newblock {DressCode Android Malware Discovered on Google Play}.
+\newblock
+  \url{http://blog.checkpoint.com/2016/08/31/dresscode-android-malware-discovered-on-google-play},
+  August 2016.
+
+\bibitem[NPM14]{npm-reg-comp}
+NPM.
+\newblock Newly paranoid maintainers.
+\newblock
+  \url{http://blog.npmjs.org/post/80277229932/newly-paranoid-maintainers},
+  March 2014.
+
+\bibitem[npm15a]{npm2deps}
+npm.
+\newblock npm v2 dependency resolution.
+\newblock \url{https://docs.npmjs.com/how-npm-works/npm2}, December 2015.
+
+\bibitem[npm15b]{npm3deps}
+npm.
+\newblock npm v3 dependency resolution.
+\newblock \url{https://docs.npmjs.com/how-npm-works/npm3}, December 2015.
+
+\bibitem[NPM16a]{leftpad}
+NPM.
+\newblock kik, left-pad, and npm.
+\newblock \url{http://blog.npmjs.org/post/141577284765/kik-left-pad-and-npm},
+  March 2016.
+
+\bibitem[NPM16b]{npm-https}
+NPM.
+\newblock npm registry is now fully {HTTPS!}
+\newblock
+  \url{http://blog.npmjs.org/post/142077474335/npm-registry-is-now-fully-https},
+  April 2016.
+
+\bibitem[NPM16c]{npm-package-install}
+NPM.
+\newblock Package install scripts vulnerability.
+\newblock
+  \url{http://blog.npmjs.org/post/141702881055/package-install-scripts-vulnerability},
+  March 2016.
+
+\bibitem[pos13]{github-rubygems}
+postmodern.
+\newblock {Add safe\_load \#119}.
+\newblock \url{https://github.com/ruby/psych/issues/119#issuecomment-12875715},
+  January 2013.
+
+\bibitem[{Pyt}17]{pypi}
+{Python Software Foundation}.
+\newblock {PyPI} - the {P}ython package index.
+\newblock \url{https://pypi.python.org/pypi}, January 2017.
+
+\bibitem[SC07]{frontrunning}
+ICANN Security and Stability~Advisory Committee.
+\newblock Advisory on domain name front running.
+\newblock \url{https://www.icann.org/en/system/files/files/sac-022-en.pdf},
+  October 2007.
+
+\bibitem[Sel16]{shrink-response}
+Seldo.
+\newblock Avoid http urls in shrinkwrap files.
+\newblock
+  \url{http://blog.npmjs.org/post/154400916805/avoid-http-urls-in-shrinkwrap-files},
+  December 2016.
+
+\bibitem[SMCD10]{samuel2010survivable}
+Justin Samuel, Nick Mathewson, Justin Cappos, and Roger Dingledine.
+\newblock Survivable key compromise in software update systems.
+\newblock In {\em CCS}. ACM, October 2010.
+
+\bibitem[SPL16]{staicu2016understanding}
+Cristian-Alexandru Staicu, Michael Pradel, and Benjamin Livshits.
+\newblock Understanding and automatically preventing injection attacks on node.
+  js.
+\newblock Technical Report TUD-CS-2016-14663, TU Darmstadt, Department of
+  Computer Science, November 2016.
+
+\bibitem[Ste16]{shrink}
+Deian Stefan.
+\newblock npm shrinkwrap allows remote code execution.
+\newblock
+  \url{https://hackernoon.com/npm-shrinkwrap-allows-remote-code-execution-63e6e0a566a7#.e7an55fo2},
+  December 2016.
+
+\bibitem[ste17]{core}
+stellar.
+\newblock stellar-core.
+\newblock \url{https://github.com/stellar/stellar-core}, January 2017.
+
+\bibitem[Sul16]{yahoo-backdoor}
+Margaret Sullivan.
+\newblock {Yahoo} helps the government read your emails. just following orders,
+  they say.
+\newblock
+  \url{https://www.washingtonpost.com/lifestyle/style/yahoo-helps-the-government-read-your-emails-just-following-orders-they-say/2016/10/05/05648894-8b01-11e6-875e-2c1bfe943b66_story.html},
+  October 2016.
+
+\bibitem[{Tra}17]{travis}
+{Travis CI}.
+\newblock Teamwork makes {Travis CI} possible.
+\newblock \url{https://travis-ci.com/about}, January 2017.
+
+\bibitem[Tru13]{trumptweet}
+Donald~J. Trump.
+\newblock \url{https://twitter.com/realdonaldtrump/status/392990408843984897},
+  October 2013.
+
+\bibitem[Una15]{openbsd}
+Ted Unangst.
+\newblock signify: Securing {OpenBSD} from us to you.
+\newblock In {\em {BSDCan}}, 2015.
+
+\bibitem[Yal17]{hackathon-starter}
+Sahat Yalkabov.
+\newblock Hackathon starter - a kickstarter for nodejs web applications.
+\newblock \url{https://github.com/sahat/hackathon-starter}, January 2017.
+
+\bibitem[ZWZJ12]{zhou2012hey}
+Yajin Zhou, Zhi Wang, Wu~Zhou, and Xuxian Jiang.
+\newblock Hey, you, get off of my market: Detecting malicious apps in official
+  and alternative android markets.
+\newblock In {\em NDSS}, February 2012.
 
 \end{thebibliography}
