@@ -6,3 +6,5 @@
 *.lot
 *.pdf
 *.toc
+*.blg
+*.swp
