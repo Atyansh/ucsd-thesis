@@ -225,6 +225,12 @@ allows other users to install his packages \emph{only if} they trust
 him and he has not revoked his key. 
 
 \begin{table*}[ht!]
+\caption{
+  The different messages supported by our registry.
+  % Every client message $m$ is signed $\langle m\rangle_k$ with key $k$.
+  We omit the messages that clients use to retrieve data from the ledger.
+}
+\label{fig:messages}
 \centering
 \small
 \begin{tabularx}{\textwidth}{lX}
@@ -282,12 +288,6 @@ $\langle\extensible: data\rangle_{X_{sk}}$  &
   or user key $X_{sk}$.\\
 \bottomrule
 \end{tabularx}
-\caption{
-  The different messages supported by our registry.
-  % Every client message $m$ is signed $\langle m\rangle_k$ with key $k$.
-  We omit the messages that clients use to retrieve data from the ledger.
-  \vspace*{-0.2in}}
-\label{fig:messages}
 \end{table*}
 % maybe group together the upcall dudes like toString.
 

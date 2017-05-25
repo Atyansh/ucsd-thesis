@@ -1,0 +1,94 @@
+\chapter{Saber: delegating transport layer security to browsers}
+
+\section{Introduction}
+\label{sec:intro-saber}
+
+Transport Layer Security (TLS) is a cryptographic protocol designed to provide
+end-to-end communication security between two parties, even in the presence of
+active man-in-the-middle adversaries. It has since become the standard for
+providing secure communication on the Internet and is used for several
+sensitive applications such as banking, journalism, social media, shopping,
+etc. Usage of TLS is most commonly seen in securing web traffic in the form of
+HTTPS. When implemented correctly, HTTPS guarantees privacy, integrity, and
+authenticity of all web communication between two parties. Further, there are
+additional mechanisms such as \emph{strict transport security} (HSTS),
+\emph{public key pinning} (HPKP), \emph{online certificate status protocol}
+(OCSP) stapling, and \emph{certificate transparency} (CT), that improve the
+security of HTTPS. However implementing HTTPS and all the supporting security
+mechanisms correctly has proven to be a challenge for most applications.
+
+While browsers are not free from TLS bugs, they have been patched over time
+through extensive amounts of penetration testing. They have further been the
+pioneers of modern HTTPS standards and are the first to implement them into
+practice. Previous work has found that non-browser applications in particular
+have struggled with validating TLS certificates\cite{dangerous}. We also
+further find that they lag behind in other web security practices such as HSTS,
+HPKP, and certificate revocation checking. Despite this, usage of non-browser
+software such as package managers, wget/curl, and language specific request
+libraries, is prominent. These applications and libraries support TLS and hence
+provide the impression of giving security to the user, but they fail to live up
+to that promise. We find that browsers such as Chrome and Firefox implement not
+only secure validation of TLS certificates in general, implement mechanisms
+such as HSTS, HPKP, and verification of revoked certificates, but also have
+dynamic protection against identified malware and dangerous binaries. They are
+also better at displaying security warnings to the user in a transparent
+manner.
+
+The issues with improper implementation of TLS for non-browser applications are
+due to both the complexity of the protocol, lack of general understanding of
+TLS, and not having the same security expertise and engineering resources for
+development as browsers do. Solving these issues would be a monumental task and
+would require widespread education of the importance of properly implementing
+communication security, along with the expense of recruiting security experts
+for every application that requires using TLS, which may not be feasible for
+several applications that are maintained by individual developers but are
+nonetheless popular.
+
+We propose a new way to build non-browser applications that allows developers
+to use the TLS protocol for web security but does not require the expertise
+needed to implement TLS verification correctly. Our method involves delegating
+the handling of connection security to browsers, so the non-browser application
+deals only with application layer logic. This allows non-browser applications
+to get connection security for free from browsers. This also lets them take
+advantage of any mechanisms that browsers implement to harden TLS security
+(such as HSTS, HPKP, etc.) for free as well. We have built a prototype version
+of wget using this method as a proof of concept. Our application is able to
+validate proper TLS connections without writing any code that requires a deep
+knowledge of the TLS protocol.
+
+This chapter is organized as follows: In \Cref{sec:background-saber}, we
+discuss the background material related to TLS and HTTPS, the various existing problems
+with the ecosystem and how browsers have taken steps to solve them. In
+\Cref{sec:problems-saber} we look at some non-browser applications, in particular
+\emph{wget} to see how they compare to modern browsers in terms of connection security.
+In \Cref{sec:saber-saber}, we present the design of a library that delegates
+connection security to the browser. In \Cref{sec:swget-saber}, we present \emph{swget} as
+a prototype implementation of wget that provides better connection security by delegating
+TLS to browsers. In \Cref{sec:conclusion-saber}, we conclude. In \Cref{sec:related-saber},
+we discuss related work.
+% TODO: write sections descriptions better
+
+
+\section{Background}
+\label{sec:background-saber}
+
+
+
+\section{Problems}
+\label{sec:problems-saber}
+
+
+
+\section{Solution}
+\label{sec:saber-saber}
+
+
+
+\section{swget}
+\label{sec:swget-saber}
+
+\section{Conclusion}
+\label{sec:conclusion-saber}
+
+\section{Related Work}
+\label{sec:related-saber}

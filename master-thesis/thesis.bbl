@@ -23,6 +23,12 @@ davglass.
 \newblock registry-static.
 \newblock \url{https://www.npmjs.com/package/registry-static}, January 2017.
 
+\bibitem[ea12]{dangerous}
+Georgiev et~al.
+\newblock The most dangerous code in the world: Validating ssl certificates in
+  non-browser software.
+\newblock In {\em CCS}, October 2012.
+
 \bibitem[Eva13]{rubygems-reg-comp}
 Evan.
 \newblock Data verification.
