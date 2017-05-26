@@ -7,11 +7,11 @@ Transport Layer Security (TLS) is a cryptographic protocol designed to provide
 end-to-end communication security between two parties, even in the presence of
 active man-in-the-middle adversaries. It has since become the standard for
 providing secure communication on the Internet and is used for several
-sensitive applications such as banking, journalism, social media, shopping,
+sensitive applications such as banking, email, instant messaging, shopping,
 etc. Usage of TLS is most commonly seen in securing web traffic in the form of
-HTTPS. When implemented correctly, HTTPS guarantees privacy, integrity, and
-authenticity of all web communication between two parties. Further, there are
-additional mechanisms such as \emph{strict transport security} (HSTS),
+HTTPS. When implemented correctly, HTTPS guarantees confidentiality, integrity,
+and authenticity of all web communication between two parties. Further, there
+are additional mechanisms such as \emph{strict transport security} (HSTS),
 \emph{public key pinning} (HPKP), \emph{online certificate status protocol}
 (OCSP) stapling, and \emph{certificate transparency} (CT), that improve the
 security of HTTPS. However implementing HTTPS and all the supporting security
@@ -57,32 +57,143 @@ validate proper TLS connections without writing any code that requires a deep
 knowledge of the TLS protocol.
 
 This chapter is organized as follows: In \Cref{sec:background-saber}, we
-discuss the background material related to TLS and HTTPS, the various existing problems
-with the ecosystem and how browsers have taken steps to solve them. In
-\Cref{sec:problems-saber} we look at some non-browser applications, in particular
-\emph{wget} to see how they compare to modern browsers in terms of connection security.
-In \Cref{sec:saber-saber}, we present the design of a library that delegates
-connection security to the browser. In \Cref{sec:swget-saber}, we present \emph{swget} as
-a prototype implementation of wget that provides better connection security by delegating
-TLS to browsers. In \Cref{sec:conclusion-saber}, we conclude. In \Cref{sec:related-saber},
-we discuss related work.
+discuss the background material related to TLS and HTTPS, the various existing
+problems with the ecosystem and how browsers have taken steps to solve them. In
+\Cref{sec:problems-saber} we look at some non-browser applications, in
+particular \emph{wget} to see how they compare to modern browsers in terms of
+connection security. In \Cref{sec:solution-saber}, we present the design of a
+library that delegates connection security to the browser. In
+\Cref{sec:swget-saber}, we present \emph{swget} as a prototype implementation
+of wget that provides better connection security by delegating TLS to browsers.
+In \Cref{sec:conclusion-saber}, we conclude. In \Cref{sec:related-saber}, we
+discuss related work.
 % TODO: write sections descriptions better
 
 
 \section{Background}
 \label{sec:background-saber}
 
+In this section, we present a brief description TLS, HTTPS, and additional security
+mechanisms that harden the HTTPS ecosystem.
+
+\subsection{TLS}
+Transport Layer Security (TLS) is a cryptographic protocol that has been
+established as the standard method of secure, encrypted communication over the
+Internet. TLS aims to provide \emph{Authenticated Encryption} which requires the
+following key properties-
+\begin{itemize}
+  \item \textbf{Confidentiality:} All communication between two parties is
+  encrypted such that no information about the contents of the communication is
+  leaked to an adversary.
+
+  \item \textbf{Integrity:} An adversary must not be able to change the
+  contents of the communication between the two parties in any way.
+
+  \item \textbf{Authenticity:} The two communicating parties can verify the
+  identity of each other (or atleast one party) through some certificate, and
+  ensure that the messages exchanged are from each other. As such, an adversary
+  cannot pretend to be one of the comunicating parties.
+\end{itemize}
+
+TLS provides these security guaranties underneath the application layer,
+Several application layer protocols such as HTTPS, IMAPS, XMPP, and SMTP use TLS
+to provide end-to-end security.
+
+\subsection{HTTPS}
+HTTPS (or "HTTP over TLS") is a protocol which secures HTTP traffic within a
+connection encrypted by the TLS protocol. It is mainly used for authenticating
+a website and securing communication between the website and its users.
+
+\subsection{Strict Transport Security}
+
+\subsection{Public Key Pinning}
+The current HTTPS Public Key Infrastructure relies on trusting all the root CAs
+(and by extension, all intermediate CAs trusted by root CAs) that a user
+trusts. This raises the concern that if one of the CAs was coerced or
+compromised by some adversary, then that CA could issue a valid rogue
+certificate for some website without the permission of the owner of the
+website. This rogue certificate would be trusted by any user that trusts the CA
+that generated it. Previous work has shown that certificate authrities can be
+falsely tricked into issuing rogue certificates and in 2010, a commercial
+software was available for sale to government agencies to use rogue
+certificates for intercepting traffic. HTTPS and HSTS alone do not protect from
+this kind of interception.
+
+\emph{HTTP Public Key Pinning} (HPKP) solves this problem by allowing web
+servers to serve an HTTP header over HTTPS that lists the hashes of the
+complete \emph{Subject Public Key Info} field of a certificate for each public
+that the domain owner wishes to use to establish a TLS connection. A client
+that respects the HPKP policy must ensure that while establishing a TLS
+connection with a website for which there is a cached HPKP entry, at least one
+key in the certificate chain matches a key stored in the pin set.
+
+This allows a domain owner to pin only the public keys that they trust. In the
+case that the owner chooses to only pin leaf-level keys generated by the owner
+themselves, no CA would be able to generate a rogue certificate for the domain
+that a client that has already had the keys pinned would accept. The owner can
+also choose to pin the public keys for certain CAs that they trust (over let's
+say some other CAs in another country) which would still reducing the surface
+area for rogue certificates.
+
+Similar to HSTS, HPKP headers also specify a \emph{max-age} policy which
+determines how long a client should remember the pinned key. This value also
+keeps getting continuously updated if the client receives the header again
+before the policy expires. HPKP headers are not very commonly seen from
+websites but both Firefox and Chrome provide support for it.
 
 
-\section{Problems}
+\subsection{Certificate Revocations}
+In the case that a domain's private key gets leaked (due to server compromise,
+phishing, etc.)
+
+
+\section{Issues with non-browsers}
 \label{sec:problems-saber}
 
+TLS is a complicated protocol to implement correctly and the configuration
+options in TLS libraries are difficult to understand. Several non-browser
+softwares have been shown to be insecure against a network not due to using the
+an incorrect protocol, or a broken library, but rather due to incorrect
+certificate validation arising out of mistakes when configuring SSL options for
+their application.
 
+Further, even a correct implementation of TLS does not protect these
+applications from SSL stripping, rogue certificates, and revocations, unless
+all the additional mechanisms such as HSTS, HPKP, and OCSP Stapling are also
+implemented by the application. In our experiments with wget, curl, and the
+standard request libraries for Python and Node, we found that only wget
+supports HSTS and has very limited and manual support for public key-pinning.
+None of the four threw any form of error or warning for a revoked certificate
+and the request libraries for Python and Node, and curl do not have any
+mechanism for HSTS and HPKP.
+
+Even when wget provides support for HSTS, upon investigation, we found that
+wget was not updating the expiration time for HSTS entries every time it
+received a valid HSTS header with a valid max-age policy. This breaks the
+continuity policy of HSTS which is supposed to maintain a secure HSTS entry as
+long as user visits the domain frequently (i.e. within the specified max-age
+period). If a domain provides an HSTS max-age policy of 1 day, then the wget
+client would be vulnerable to interception at least once a day even if the
+developer visits the domain multiple times within that period.
+
+\subsection{Why do these problems exist?}
+
+HSTS and HPKP are relatively recent standards that have been pioneered by web
+browsers so it was not surprising for us to find that non-browser softwares do
+not implement them. However, this strengthens the argument that browsers are
+ahead of other applications when it comes to providing connection security. They
+are also more frequently updated when compared to non-browsers which allows them to
+fix any discovered vulnerabilities faster.
+
+\subsection{Representation of a bad connection}
+
+
+\subsection{Redirects are not transparent}
 
 \section{Solution}
-\label{sec:saber-saber}
+\label{sec:solution-saber}
 
-
+\subsection{Motivation}
 
 \section{swget}
 \label{sec:swget-saber}

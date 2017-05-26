@@ -1,0 +1,21 @@
+Today, any non-trivial application requires the ability to communicate over the
+network. Providing a secure connection for the application to achieve its goals
+is a difficult task as it involves correctly implementing complex protocols.
+Further, even if you could provide integrity and confidentiality of data
+received over the network, it is sometimes difficult to verify the benign
+nature of such data. Having stood the test of time as being the most popular
+application for network communication, browsers have been able to achieve
+network security with greater success. However, almost all other non-browser
+applications have lagged behind. We propose that these applications delegate
+network security to browsers; we built a prototype version of \emph{wget} to
+demonstrate the feasibility of building an application without requiring a deep
+understanding of the complexity of the TLS protocol.
+
+We take a closer look at package managers as they require more than just
+standard network security. In particular, developers often download and
+execute code from untrusted entities. Downloading and running packages over
+HTTPS is not sufficient in this case. We argue for a more secure package manager,
+one that can cope with nation state adversaries (who have a history of
+infiltrating codebases). We describe the design of one such secure
+system---SPAM---that uses the new Stellar federated Byzantine fault tolerant
+system.
