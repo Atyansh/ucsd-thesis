@@ -181,25 +181,126 @@ developer visits the domain multiple times within that period.
 HSTS and HPKP are relatively recent standards that have been pioneered by web
 browsers so it was not surprising for us to find that non-browser softwares do
 not implement them. However, this strengthens the argument that browsers are
-ahead of other applications when it comes to providing connection security. They
-are also more frequently updated when compared to non-browsers which allows them to
-fix any discovered vulnerabilities faster.
+ahead of other applications when it comes to providing connection security.
+They are also more frequently updated when compared to non-browsers which
+allows them to fix any discovered vulnerabilities faster.
 
-\subsection{Representation of a bad connection}
+Further, not all non-browsers have the same engineering resources available to
+them as browsers do. Both Chrome and Firefox have dedicated security teams
+working on ensuring the safety of the respective browsers. It is difficult to
+for every single application to afford the same attention to security as
+browsers can even when the applications do have similar connection
+requirements. While we can encourage safe defaults and better tutorials,
+configuration mistakes would be difficult to eliminate since developers quite
+often do not have the security expertise to understand mistake. This can be
+seen by comments from developers on stack overflow, with one particular
+response suggesting disabling certificate validation being a top answer with
+hundreds of votes.
+
+\subsection{Non-browsers have a representation issue}
+Due to the nature of several non-browser applications and their lack of a
+graphical user interface, they do not convey the same information about the
+security of the connection to the user as browsers do. There has been a lot of
+work involved in displaying appropriate security warnings to the user when a
+certificate error occurs. Further, the "green lock" symbol is also a useful
+indicator for users that informs them of the security of their connection to
+some website. All of these advantages are application specific and usually
+exclusive to browsers.
+
+Redirects, in particular, can be easily overlooked without appropriate
+indicators. An https to http redirect may be considered acceptable behavior for
+a browser since the user can look for insecure connection indicators next to
+the url. This behavior however may not be appropriate for an application like
+wget. In the case of such a redirect, wget would follow the redirect and download
+the webpage. The redirect to http is easily overlooked by an average user.
+Considering the original request was for an https url, the user's security
+may have been undermined without the knowledge of the user.
 
 
-\subsection{Redirects are not transparent}
-
-\section{Solution}
+\section{Delegating connection security to browser}
 \label{sec:solution-saber}
+
+We propose a new way to build non-browser applications that allows developers
+to use the TLS protocol for web security but does not require the expertise
+needed to implement TLS verification correctly. We achieve this by delegating
+the actual network request/response handling to chrome. Instead of directly
+interfacing with TLS, all requests are forwarded to chrome, which would handle
+proper certificate checking on behalf of the application. This allows non-browser
+applications to capitalize on the security, reliability, and update frequency of
+chrome, while only having to worry about the correctness of application layer
+logic.
+
+Further, since chrome also implements HSTS, HPKP, revocation verification, non-browser
+applications gain all of these for free as well. Chrome also provides protection
+from websites marked as containing malware, phishing attacks, dangerous binaries, etc.
+
+\subsection{Remote debugging protocol}
+We built a prototype version of \emph{wget} that we discuss in
+\Cref{sec:swget-saber}. For our prototype implementation, we utilize the chrome
+\emph{remote debugging protocol}. Chrome with remote debugging enabled allows
+other applications to communicate with it over a web socket. It's mainly been
+used for debugging chrome, however since it allows a client to inspect chrome,
+we use it to issue network requests and fetch responses. Since the network request
+is made by chrome, it performs all the usual HTTPS security checks as usual and
+the request only succeeds if the connection is secure.
+
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{figures/prototype}
+  \caption[Prototype saber approach]{Our prototype approach.} 
+  \label{fig:prototype-saber}
+\end{figure}
+
+\subsection{Linking directly to chrome}
+
+
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{figures/long-term}
+  \caption[Long-term saber approach]{This figure shows an ideal long-term
+  approach.} 
+  \label{fig:long-term-saber}
+\end{figure}
+
 
 \subsection{Motivation}
 
 \section{swget}
 \label{sec:swget-saber}
 
+
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{figures/regular}
+  \caption[Prototype saber approach]{Our prototype approach.} 
+  \label{fig:regular-saber}
+\end{figure}
+
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{figures/redirect}
+  \caption[Prototype saber approach]{Our prototype approach.} 
+  \label{fig:redirect-saber}
+\end{figure}
+
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{figures/cert-error}
+  \caption[Prototype saber approach]{Our prototype approach.} 
+  \label{fig:cert-error-saber}
+\end{figure}
+
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{figures/basic-auth}
+  \caption[Prototype saber approach]{Our prototype approach.} 
+  \label{fig:basic-auth-saber}
+\end{figure}
+
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{figures/malware}
+  \caption[Prototype saber approach]{Our prototype approach.} 
+  \label{fig:malware-saber}
+\end{figure}
+
 \section{Conclusion}
 \label{sec:conclusion-saber}
+
+\subsection{Shared/Global HSTS}
 
 \section{Related Work}
 \label{sec:related-saber}
