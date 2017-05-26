@@ -105,6 +105,44 @@ connection encrypted by the TLS protocol. It is mainly used for authenticating
 a website and securing communication between the website and its users.
 
 \subsection{Strict Transport Security}
+While HTTPS protects users from active man-in-the-middle attackers, the
+protection only applies if the client actually makes an HTTPS web request.
+There are certain clients or browser extension that force every request to be
+HTTPS, but with a large portion of the web only accessible over HTTP, such a
+client is infeasible and would block access to a significant portion of the
+Internet for users.
+
+Secure connection to a domain that does serve over HTTPS can only be guaranteed
+if the initial web request made by the client was over HTTPS. Even if the
+domain redirects from HTTP to HTTPS for partial or all of the web requests
+that it serves, an active man-in-the-middle attacker could intercept that
+redirect and replace it with a forged accept response pretending to be the
+server. As a result, the attacker could make it so that the client never
+actually switches to an HTTPS connection and remains vulnerable. This class of
+attacks is commonly known as \emph{SSL Stripping}.
+
+To combat this problem, servers now serve \emph{Strict-Transport-Security}
+HTTPS header as part of the response that instructs the client to only visit
+the website over HTTPS connection. A client that respects this HSTS policy
+would automatically upgrade all HTTP requests made by the user to HTTPS before
+sending the request over the network. As long as the client can guarantee a
+secure connection with a domain once and receive an HSTS header, all future
+communication within a designated timeframe that domain is protected. HSTS
+headers also need to provide a \emph{max-age} policy that determines how long
+a client enforces the HSTS policy. This policy is continuously updated every
+time an HSTS header is received, so if a client visits the same website again
+within the expiry period, the client stays protected. Otherwise, the client
+loses protection when the max-age policy expires and protection is resumed once
+the client receives a fresh HSTS header from securely connecting to the domain
+again.
+
+HSTS relies on the \emph{Trust On First Use} (TOFU) principle to harden
+protection. Today, browsers actually ship with preloaded list of domains that
+have HSTS protection turned on by default so that users gain HSTS protection
+even before they establish a single secure connection. Any domain owner can
+apply to be a part of this list and the process has seen significant adoption
+since it was automated by chrome.
+
 
 \subsection{Public Key Pinning}
 The current HTTPS Public Key Infrastructure relies on trusting all the root CAs
@@ -139,8 +177,9 @@ Similar to HSTS, HPKP headers also specify a \emph{max-age} policy which
 determines how long a client should remember the pinned key. This value also
 keeps getting continuously updated if the client receives the header again
 before the policy expires. HPKP headers are not very commonly seen from
-websites but both Firefox and Chrome provide support for it.
-
+websites but both Firefox and Chrome provide support for it. Browsers also
+ship preloaded HPKP lists similar to HSTS that provide this protection
+by default.
 
 \subsection{Certificate Revocations}
 In the case that a domain's private key gets leaked (due to server compromise,
@@ -240,67 +279,142 @@ We built a prototype version of \emph{wget} that we discuss in
 \emph{remote debugging protocol}. Chrome with remote debugging enabled allows
 other applications to communicate with it over a web socket. It's mainly been
 used for debugging chrome, however since it allows a client to inspect chrome,
-we use it to issue network requests and fetch responses. Since the network request
-is made by chrome, it performs all the usual HTTPS security checks as usual and
-the request only succeeds if the connection is secure.
+we use it to issue network requests and fetch responses. Since the network
+request is made by chrome, it performs all the usual HTTPS security checks and
+the request only succeeds if the connection is secure. \Cref{fig:prototype-saber}
+shows the design for this approach.
 
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{figures/prototype}
-  \caption[Prototype saber approach]{Our prototype approach.} 
+  \caption[Prototype approach]{\textbf{Prototype approach:} Applications issue
+  requests and fetch responses from chrome through the chrome remote debugging
+  protocol. Chrome makes the request on the application's behalf and fetches
+  handles all connection security specifics.}
   \label{fig:prototype-saber}
 \end{figure}
 
-\subsection{Linking directly to chrome}
-
+\subsection{Linking directly to chrome's networking code}
+A more optimized approach would be to link directly with chrome's networking
+library. This could potentially be more lightweight as it would only require
+a small subset of chrome wrapped with a thin request API that applications
+could interface with. \Cref{fig:long-term-saber} shows a potential design for
+this approach. We omit this approach for future work.
 
 \begin{figure}[h]
-  \includegraphics[width=\textwidth]{figures/long-term}
-  \caption[Long-term saber approach]{This figure shows an ideal long-term
-  approach.} 
-  \label{fig:long-term-saber}
+  \includegraphics[width=\textwidth]{figures/long-term} \caption[Optimal
+  approach]{\textbf{Optimal approach:} The network request library from chrome
+  is exported (along with any security handling logic) and wrapped up in a
+  library with an exposed Request API that non-browser applications interfact
+  with.} \label{fig:long-term-saber}
 \end{figure}
 
-
 \subsection{Motivation}
+The motivation behind our delegation is based on two key facts: (1) Browsers
+are already pioneers of providing secure communication and other applications
+can capitalize on that. (2) Writing security critical code is difficult and we
+want to minimize the amount of such code that needs to be written by
+developers. As an example, we implement \emph{swget}, a prototype of wget that
+provides connection security without writing any TLS verification code.
 
 \section{swget}
 \label{sec:swget-saber}
 
+\emph{wget} is a popular command line tool for downloading files from a
+webserver. It is frequently used by developers to crawl web pages, download
+scripts, and sometimes directly pipe such scripts to the shell. While such a
+practice of executing code obtained remotely can be dangerous in itself, it
+is especially a problem if the security of the connection is compromised by a
+man-in-the middle attacker.
+
+We wrote our own prototype version of \emph{secure wget} that has the same
+basic functionality as wget, but uses chrome to make network requests. Looking
+at wget's source code, we see it has 994 lines of code for interfacing with the
+\emph{OpenSSL} library. Our version of swget uses the remote debugging protocol
+to allow chrome to make requests on behalf of wget. We override chrome's
+certificate handling settings using the remote debugging protocol to grab the
+certificate error determined by chrome and cancel the request. We used the
+chrome remote interface Node library to construct our messages to Chrome, which
+allowed us to give \emph{swget} secure validation logic in only 8 lines of
+application layer code.
+
 
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{figures/regular}
-  \caption[Prototype saber approach]{Our prototype approach.} 
+  \caption[Regular usage of swget]{swget fetches and saves the webpage similar
+  to wget in the normal case}
   \label{fig:regular-saber}
 \end{figure}
 
-\begin{figure}[h]
-  \includegraphics[width=\textwidth]{figures/redirect}
-  \caption[Prototype saber approach]{Our prototype approach.} 
-  \label{fig:redirect-saber}
-\end{figure}
+Since chrome does certificate validation, swget's connection security is at
+least as restrictive as chrome by default (although we can manually increase or
+decrease restrictions based on what the application requires). This also
+includes protection from revoked certificates, something which wget does not
+provide today. A full list of our certificate testing for various applications
+can be found in \Cref{app:results}.
 
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{figures/cert-error}
-  \caption[Prototype saber approach]{Our prototype approach.} 
+  \caption[Behavior on certificate errors]{swget catches any certificate errors
+  caught by chrome. In the figure, we see an example of domains with expired
+  certificate, mismatched hostname, and an example of website that serves a
+  valid certificate that was not pinned as part of the HPKP policy.} 
   \label{fig:cert-error-saber}
 \end{figure}
 
+
+\subsection{Secure redirects}
+The default redirect behavior for chrome is for top level requests is to follow
+redirects. While this behavior is okay for chrome, this may not be ideal for an
+application like swget. Users use wget to fetch and download files. If a
+request to fetch was made for an https link which was then redirected to http,
+security of the connection could be compromised by an attacker. While browsers
+can display the current security status to the user, there's no convenient way
+to check whether a file downloaded with wget was actually downloaded securely
+or not, once the file has already been fetched. We disable HTTPS to HTTP
+redirects by default in our implementation of swget. As seen from
+\Cref{fig:redirect-saber} a connection is terminated if the application
+encounters an unsafe redirect.
+
 \begin{figure}[h]
-  \includegraphics[width=\textwidth]{figures/basic-auth}
-  \caption[Prototype saber approach]{Our prototype approach.} 
-  \label{fig:basic-auth-saber}
+  \includegraphics[width=\textwidth]{figures/redirect}
+  \caption{Preventing unsafe https to http redirects} 
+  \label{fig:redirect-saber}
 \end{figure}
+
+\subsection{Warning messages}
+Non-browser applications have suffered from having poor UI in comparison to
+browsers. Previous research has shown that better browser TLS warnings
+decreased user click-through. We believe that improving warning messages for
+users that use non-browser applications would benefit from improved warning
+messages as well and have included more visual indicators (such as lock symbols)
+to convey the security state of the connection. This is especially noticeable
+in the case of redirects (\Cref{fig:redirect-saber}) and malware warnings
+(\Cref{fig:malware-saber}). Further work needs to be done to measure the
+effectiveness of these warnings.
 
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{figures/malware}
-  \caption[Prototype saber approach]{Our prototype approach.} 
+  \caption{Malware detection as flagged by Chrome} 
   \label{fig:malware-saber}
 \end{figure}
 
+\subsection{Cookies and basic authentication}
+Since swget uses chrome to issue 
+
+\subsection{Global HSTS and HPKP}
+
+
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{figures/basic-auth}
+  \caption{HTTP Basic Auth} 
+  \label{fig:basic-auth-saber}
+\end{figure}
+
+
+\section{Limitations}
+
 \section{Conclusion}
 \label{sec:conclusion-saber}
-
-\subsection{Shared/Global HSTS}
 
 \section{Related Work}
 \label{sec:related-saber}

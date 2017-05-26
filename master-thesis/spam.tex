@@ -120,7 +120,7 @@ relatively complex software largely by repurposing existing projects (like Dan's
 the package manager and registry do not impose restrictions on uploaded code. This
 lax security, however, comes at a cost.
 
-\paragraph{Malicious registry}
+\subsection{Malicious registry}
 In most uncurated package management systems, all users that depend on a
 malicious registry are at its mercy. For example, a registry may
 serve malicious or vulnerable packages in place of 
@@ -135,7 +135,7 @@ download their packages at risk. npm maintainers have
 not fixed this vulnerability. Instead, they warn developers to manually
 stick an ``\texttt{s}'' at the end of those links~\cite{shrink-response}.
 
-\paragraph{Malicious developer} % npm v 2: different?
+\subsection{Malicious developer} % npm v 2: different?
 In addition to trusting the registry, developers must also trust the packages
 that they install, and those on which their installations depend on. This is
 deceptively difficult: even when developers rely on a handful of packages,
@@ -160,7 +160,7 @@ and out of date dependency versions. We analyzed\footnote{
 authors on npm---presumably trustworthy people---and out of 6,498 projects,
 we found that 1,693, or 26.1\% have out of date dependencies.
 
-\paragraph{Malicious integration services}
+\subsection{Malicious integration services}
 Along with registries and third-party code, developers also place implicit trust in
 integration tools like Travis~\cite{travis}. This implicit trust is once again
 transitive: for example, when Dan shares his API keys with Travis, he---and
@@ -181,7 +181,7 @@ a distributed multi-node registry which manages package data and metadata and
 provides an interface to update and query this data. \spam also includes a
 client tool that allows developers to communicate with the registry.
 
-\paragraph{The registry}
+\subsection{The registry}
 At a high level, the goal of the registry is to maintain a ledger
 with information about users and packages. The ledger provides
 the client tools---and thus the developers who use them---with a way of
@@ -225,11 +225,11 @@ allows other users to install his packages \emph{only if} they trust
 him and he has not revoked his key. 
 
 \begin{table*}[ht!]
-\caption{
-  The different messages supported by our registry.
-  % Every client message $m$ is signed $\langle m\rangle_k$ with key $k$.
-  We omit the messages that clients use to retrieve data from the ledger.
-}
+  \caption[The different messages supported by our registry]{
+    The different messages supported by our registry.
+    % Every client message $m$ is signed $\langle m\rangle_k$ with key $k$.
+    We omit the messages that clients use to retrieve data from the ledger.
+  }
 \label{fig:messages}
 \centering
 \small
@@ -291,7 +291,7 @@ $\langle\extensible: data\rangle_{X_{sk}}$  &
 \end{table*}
 % maybe group together the upcall dudes like toString.
 
-\paragraph{User and package keys}
+\subsection{User and package keys}
 \spam{} manages all keys automatically to prevent key overuse and
 compromise. For example, \spam{} creates a new user key
 when a developer creates a new account. \spam{} also
@@ -326,7 +326,7 @@ registry asserts that it has verified the new key with the user's external ident
 a point of compromise, following similar steps to those in the project-key
 compromise. 
 
-\paragraph{Distributed registry}
+\subsection{Distributed registry}
 Our registry consists of several (at least four) top-level mirrors, or nodes
 that use a consensus protocol---specifically, the Stellar Consensus
 Protocol (SCP)---to agree on ledger entries~\cite{stellar}.
@@ -370,7 +370,7 @@ two signed, contradicting messages from a culprit node. One of these messages
 comes from the rollback safety buffer and one is the most recent message with
 a backdated entry number. 
 
-\paragraph{The registry threat model}
+\subsection{The registry threat model}
 In the absence of second-level nodes, our system can only provide strong
 guarantees if the majority of top-level nodes are well-behaved. Under
 this assumption, we get availability directly from SCP's liveness
@@ -442,7 +442,7 @@ as compromised: it will refuse to trust anything that the key has signed.
 A similar process can be used to ensure that registry nodes are not colluding to
 conceal backdoored packages. 
 
-\paragraph{Limitations}
+\subsection{Limitations}
 Our system design, naturally, comes with limitations.
 %
 For example, our design does not prevent front-running attacks. These attacks
