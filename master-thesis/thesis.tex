@@ -112,10 +112,12 @@
 %% GRAPHICX - This is the standard package for 
 %    including graphics for latex/pdflatex.
 \usepackage{cleveref}
+\usepackage{color}
 \usepackage{scrextend}
 \usepackage{pslatex}
 \usepackage{graphicx}
 \usepackage{tabularx}
+\usepackage{longtable}
 \usepackage{xspace}
 \usepackage[hyphens]{url}
 
@@ -145,6 +147,10 @@
 \def\spam{SPAM\xspace}
 \def\http{\texttt{http}\xspace}
 \def\https{\texttt{https}\xspace}
+\def\AcceptedG{{\color{green}Yes\xspace}}
+\def\AcceptedR{{\color{red}Yes\xspace}}
+\def\RejectedG{{\color{green}No\xspace}}
+\def\RejectedR{{\color{red}No\xspace}}
 
 %% CAPTION
 % This overrides some of the ugliness in ucsd.cls and
@@ -318,7 +324,72 @@
 \label{app:results}
 \chapter{Results}
 
-We ran the following tests with wget, curl, Python, and Node.
+\begin{longtable}{||c | c c c c c c ||}
+  \caption[Certificate error testing]{Behavior of different clients when presented with different invalid certificates}
+  \label{tab:results-table-saber} \\
+  \hline \multicolumn{1}{||c|}{\textbf{Certificate}} &
+         \multicolumn{1}{c}{\textbf{wget}} &
+         \multicolumn{1}{c}{\textbf{curl}} &
+         \multicolumn{1}{c}{\textbf{python}} &
+         \multicolumn{1}{c}{\textbf{node}} &
+         \multicolumn{1}{c}{\textbf{firefox}} &
+         \multicolumn{1}{c||}{\textbf{chrome}} \\ \hline 
+  \endfirsthead
+
+  \multicolumn{7}{c}%
+  {{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+  \hline \multicolumn{1}{||c|}{\textbf{Certificate}} &
+         \multicolumn{1}{c}{\textbf{wget}} &
+         \multicolumn{1}{c}{\textbf{curl}} &
+         \multicolumn{1}{c}{\textbf{python}} &
+         \multicolumn{1}{c}{\textbf{node}} &
+         \multicolumn{1}{c}{\textbf{firefox}} &
+         \multicolumn{1}{c||}{\textbf{chrome}} \\ \hline 
+  \endhead
+
+  \hline \multicolumn{7}{|r|}{{Continued on next page}} \\ \hline
+  \endfoot
+
+  \hline \hline
+  \endlastfoot
+    Expired & xx & xx & xx & xx & xx & xx\\
+    Wrong Host & xx & xx & xx & xx & xx & xx\\
+    Self Signed & xx & xx & xx & xx & xx & xx\\
+    Untrusted Root & xx & xx & xx & xx & xx & xx\\
+    Revoked & xx & xx & xx & xx & xx & xx\\
+    Pinning Test & xx & xx & xx & xx & xx & xx\\
+    No Common Name & xx & xx & xx & xx & xx & xx\\
+    No Subject & xx & xx & xx & xx & xx & xx\\
+    Incomplete Chain & xx & xx & xx & xx & xx & xx\\
+    SHA1 Intermediate & xx & xx & xx & xx & xx & xx\\
+    SHA256 & xx & xx & xx & xx & xx & xx\\
+    SHA384 & xx & xx & xx & xx & xx & xx\\
+    SHA512 & xx & xx & xx & xx & xx & xx\\
+    1000 Subject Alt Names & xx & xx & xx & xx & xx & xx\\
+    10000 Subject Alt Names & xx & xx & xx & xx & xx & xx\\
+    ECC256 & xx & xx & xx & xx & xx & xx\\
+    ECC384 & xx & xx & xx & xx & xx & xx\\
+    RSA2048 & xx & xx & xx & xx & xx & xx\\
+    RSA8192 & xx & xx & xx & xx & xx & xx\\
+    CBC & xx & xx & xx & xx & xx & xx\\
+    RC4-MD5 & xx & xx & xx & xx & xx & xx\\
+    RC4 & xx & xx & xx & xx & xx & xx\\
+    3DES & xx & xx & xx & xx & xx & xx\\
+    Null & xx & xx & xx & xx & xx & xx\\
+    DH480 & xx & xx & xx & xx & xx & xx\\
+    DH512 & xx & xx & xx & xx & xx & xx\\
+    DH1024 & xx & xx & xx & xx & xx & xx\\
+    DH2048 & xx & xx & xx & xx & xx & xx\\
+    DH Small Subgroup & xx & xx & xx & xx & xx & xx\\
+    DH Composite & xx & xx & xx & xx & xx & xx\\
+    Static RSA & xx & xx & xx & xx & xx & xx\\
+    Invalid Expected SCT & xx & xx & xx & xx & xx & xx\\
+    Superfish & xx & xx & xx & xx & xx & xx\\
+    eDellRoot & xx & xx & xx & xx & xx & xx\\
+    DSD Test Provider & xx & xx & xx & xx & xx & xx\\
+\end{longtable}
+
+
 
 
 
