@@ -1,4 +1,5 @@
 \chapter{Saber: delegating transport layer security to browsers}
+\label{ch:saber}
 
 \section{Introduction}
 \label{sec:intro-saber}
@@ -102,7 +103,20 @@ to provide end-to-end security.
 \subsection{HTTPS}
 HTTPS (or "HTTP over TLS") is a protocol which secures HTTP traffic within a
 connection encrypted by the TLS protocol. It is mainly used for authenticating
-a website and securing communication between the website and its users.
+a website and securing communication between the website and its users. This is
+done with the use of server certificates in TLS. In a normal HTTPS connection,
+when a client makes a request over HTTPS to some website, the server presents
+the client with a certificate signed by some certificate authority. This certificate
+authority may not directly be trusted by the client but in turn may be trusted by
+another entity that the client may trust. The server also responds with a chain of
+trust listing all the CAs that are part of the chain connecting to a root CA that
+the client trusts.
+
+A client needs to validate the certificate's credentials and
+determine the validity of the certificate. A client may find the certificate to be
+invalid in cases when it's expired, has an mis-matching common name field, revoked,
+uses a weak signature algorithm, etc. We list several different types of client
+behavior for certificates in the appendix.
 
 \subsection{Strict Transport Security}
 While HTTPS protects users from active man-in-the-middle attackers, the
@@ -183,7 +197,16 @@ by default.
 
 \subsection{Certificate Revocations}
 In the case that a domain's private key gets leaked (due to server compromise,
-phishing, etc.)
+phishing, etc.) any certificates that were issued for the corresponding public
+key need to be revoked. Both registering a certificate as revoked and checking the
+revocation status of a certificate have been tricky challenges for the server and
+client respectively.
+
+One way for checking revoked certificates was to maintain a Certificate Revocation
+List (CRL) for all revoked certificates which the clients could use to validate the
+certificate.
+
+%TODO OCSP stapling, OneCRL, CRLSets
 
 
 \section{Issues with non-browsers}
@@ -304,7 +327,7 @@ this approach. We omit this approach for future work.
   \includegraphics[width=\textwidth]{figures/long-term} \caption[Optimal
   approach]{\textbf{Optimal approach:} The network request library from chrome
   is exported (along with any security handling logic) and wrapped up in a
-  library with an exposed Request API that non-browser applications interfact
+  library with an exposed Request API that non-browser applications interface
   with.} \label{fig:long-term-saber}
 \end{figure}
 
@@ -350,7 +373,7 @@ least as restrictive as chrome by default (although we can manually increase or
 decrease restrictions based on what the application requires). This also
 includes protection from revoked certificates, something which wget does not
 provide today. A full list of our certificate testing for various applications
-can be found in \Cref{app:results}.
+can be found in the appendix.
 
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{figures/cert-error}
@@ -399,10 +422,8 @@ effectiveness of these warnings.
 \end{figure}
 
 \subsection{Cookies and basic authentication}
-Since swget uses chrome to issue 
-
-\subsection{Global HSTS and HPKP}
-
+Since swget uses chrome to issue web requests, it can take advantage of chrome's
+session management.
 
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{figures/basic-auth}
@@ -410,11 +431,20 @@ Since swget uses chrome to issue
   \label{fig:basic-auth-saber}
 \end{figure}
 
+\subsection{Global HSTS and HPKP}
 
-\section{Limitations}
+
+\section{Evaluation \& Limitations}
 
 \section{Conclusion}
 \label{sec:conclusion-saber}
 
 \section{Related Work}
 \label{sec:related-saber}
+
+\section{Acknowledgements}
+\label{sec:acknowledgement-saber}
+\Cref{ch:saber}, in part is currently being prepared for submission for
+publication of the material. Jaiswal, Atyansh; Luck, Jonathan; Chao, Joshua;
+Shacham, Hovav; Stefan, Deian. The dissertation/thesis author was the primary
+investigator and author of this material.
