@@ -198,15 +198,42 @@ by default.
 \subsection{Certificate Revocations}
 In the case that a domain's private key gets leaked (due to server compromise,
 phishing, etc.) any certificates that were issued for the corresponding public
-key need to be revoked. Both registering a certificate as revoked and checking the
-revocation status of a certificate have been tricky challenges for the server and
-client respectively.
+key need to be revoked. Both registering a certificate as revoked and checking
+the revocation status of a certificate have been tricky challenges for the
+server and client respectively.
 
-One way for checking revoked certificates was to maintain a Certificate Revocation
-List (CRL) for all revoked certificates which the clients could use to validate the
-certificate.
+One way for checking revoked certificates is to maintain a Certificate
+Revocation List (CRL) for all revoked certificates which the clients could use
+to validate the certificate. This list needs to be continuously updated with
+the latest revocations and clients need to be able to check the revocation
+status of a certificate dynamically. In a situation where a client is unable to
+access the revocation list (for example if an adversary runs a denial of
+service attack against the server hosting the revocation list), then no further
+operations that depend upon the validation of the certificate can take place.
 
-%TODO OCSP stapling, OneCRL, CRLSets
+Online Certificate Status Protocol (OCSP) is an Internet protocol used to
+communicate the revocation status of x509 certificates. The protocol works
+similarly to CRLs but require less bandwidth on the client. A client requests
+the status of a certificate from an OCSP server, which responds whether the
+certificate is revoked or not. OCSP still has the same denial of service issues
+as CRLs and many clients tend to accept a certificate if they cannot
+successfully get an OCSP response. To address this issue, the original server
+that presents the certificate can make a request to the OCSP server and staple
+the OCSP response along with the original certificate, which the client can
+verify offline. This is known as OCSP stapling and many web servers support it
+today (although only about 9\% of TLS connections use it as of 2015).
+
+Despite OCSP stapling, an attacker that can compromise a server can simply
+serve the certificate without a stapled OCSP response which the client may
+accept. Website owners therefore have an option to issue a certificate with a
+"Must-Staple" flag. If a client sees this flag in the certificate, the client
+must not accept the certificate without a stapled response. This is respected
+by chrome and firefox.
+
+Chrome and firefox have also introduced offline CRLs that they push to user's
+browsers during updates. This is primarily used for serious incidents (say if
+an intermediate CA gets compromised) to push emergency updates to the CRLs
+maintained by the client.
 
 
 \section{Issues with non-browsers}
@@ -435,6 +462,7 @@ session management.
 
 
 \section{Evaluation \& Limitations}
+\label{sec:evaluation-saber}
 
 \section{Conclusion}
 \label{sec:conclusion-saber}
