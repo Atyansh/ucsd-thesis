@@ -66,9 +66,7 @@ connection security. In \Cref{sec:solution-saber}, we present the design of a
 library that delegates connection security to the browser. In
 \Cref{sec:swget-saber}, we present \emph{swget} as a prototype implementation
 of wget that provides better connection security by delegating TLS to browsers.
-In \Cref{sec:conclusion-saber}, we conclude. In \Cref{sec:related-saber}, we
-discuss related work.
-% TODO: write sections descriptions better
+In \Cref{sec:conclusion-saber}, we conclude and discuss related work.
 
 
 \section{Background}
@@ -449,8 +447,28 @@ effectiveness of these warnings.
 \end{figure}
 
 \subsection{Cookies and basic authentication}
-Since swget uses chrome to issue web requests, it can take advantage of chrome's
-session management.
+Since swget uses chrome to issue web requests, it can take advantage of
+chrome's session management. This allows us to enable/disable cookies for
+swget. Depending on the behavior the user wants, the user's chrome profile can
+be used if the client needs to access the browser cookies, otherwise, a fresh
+chrome user profile could be created that doesn't share any session state with
+the user's actual browser.
+
+Cookie authentication can be pretty useful, especially to download web pages
+that require authentication (for example, Facebook). In standard wget, the user
+would have to provide their login credentials to wget or create a special
+authentication token for wget. In case of swget, the browser is already
+authenticated with the web server hence no further authentication is needed.
+
+To demonstrate this, we provide an example of HTTP basic authentication by
+using swget on a website that requires a user to provide login credentials
+before visiting the website. Using wget on this website would return a
+\emph{401 Unauthorized} error unless the credentials are provided along with
+the url. We used a simple username/password prompt to allow an swget user to
+provide credentials dynamically if a website requests for them. Since chrome
+remembers the authentication credentials for the session, any further requests
+would automatically have the credentials filled by chrome. This can be seen in
+\Cref{fig:basic-auth-saber}.
 
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{figures/basic-auth}
@@ -458,17 +476,28 @@ session management.
   \label{fig:basic-auth-saber}
 \end{figure}
 
-\subsection{Global HSTS and HPKP}
+\subsection{Centralized HSTS and HPKP}
+When chrome receives and HSTS or HPKP header from a domain, it would record the
+entry and provide protection for the website. Wget provides a similar HSTS
+protection for a domain. However, if an HSTS entry is recorded for a website by
+chrome, the user gets HSTS protection only for chrome and not wget. In fact,
+any two different clients do not share these protections with each other. As
+such, the user is vulnerable every time they make an HTTP request for a website
+from a new client even though they have previously received an HSTS header for
+the domain but through a different client (the same problem exists with HPKP).
 
-
-\section{Evaluation \& Limitations}
-\label{sec:evaluation-saber}
+The model of delegating connection security to a single client (chrome in our
+prototype) allows a centralized way to maintain HSTS and HPKP records. As such,
+any clients (such as swget) automatically share these protections with the
+browser. In fact, all clients that use this model would share these
+protections. We assume that, the central client (chrome) is a trusted entity.
 
 \section{Conclusion}
 \label{sec:conclusion-saber}
 
-\section{Related Work}
-\label{sec:related-saber}
+Our successful implementation of swget shows that this is a feasible strategy
+of building non-browser applications that require connection security without
+interfacing directly with a TLS library.
 
 \section{Acknowledgements}
 \label{sec:acknowledgement-saber}

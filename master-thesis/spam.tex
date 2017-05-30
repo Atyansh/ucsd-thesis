@@ -349,6 +349,12 @@ own quorum slices. Reaching consensus is a multi-phase process, the details of
 which we omit; we refer the reader to the SCP paper and Stellar core for
 details~\cite{stellar,core}.
 
+\begin{figure}[h]
+  \includegraphics[width=\textwidth]{figures/quorum}
+  \caption{Example of a registry quorum} 
+  \label{fig:quorum-spam}
+\end{figure}
+
 In our design, the top-level mirror nodes may employ other second-level nodes
 as members of other slices. Top-level mirror nodes maintain both the ledger and
 a mirror of the registry contents; they track package data and metadata.
