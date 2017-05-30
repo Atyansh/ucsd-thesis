@@ -116,6 +116,7 @@
 \usepackage{scrextend}
 \usepackage{pslatex}
 \usepackage{graphicx}
+\usepackage{tabu}
 \usepackage{tabularx}
 \usepackage{longtable}
 \usepackage{xspace}
@@ -147,10 +148,10 @@
 \def\spam{SPAM\xspace}
 \def\http{\texttt{http}\xspace}
 \def\https{\texttt{https}\xspace}
-\def\AcceptedG{{\color{green}Yes\xspace}}
-\def\AcceptedR{{\color{red}Yes\xspace}}
-\def\RejectedG{{\color{green}No\xspace}}
-\def\RejectedR{{\color{red}No\xspace}}
+\def\AcceptedG{{\color{green}Accepted\xspace}}
+\def\AcceptedR{{\color{red}Accepted\xspace}}
+\def\RejectedG{{\color{green}Rejected\xspace}}
+\def\RejectedR{{\color{red}Rejected\xspace}}
 
 %% CAPTION
 % This overrides some of the ugliness in ucsd.cls and
@@ -323,8 +324,8 @@
 \appendix
 \label{app:results}
 \chapter{Results}
-
-\begin{longtable}{||c | c c c c c c ||}
+\begin{footnotesize}
+\begin{longtabu} to \textwidth {||c | c c c c c c ||}
   \caption[Certificate error testing]{Behavior of different clients when presented with different invalid certificates}
   \label{tab:results-table-saber} \\
   \hline \multicolumn{1}{||c|}{\textbf{Certificate}} &
@@ -352,42 +353,35 @@
 
   \hline \hline
   \endlastfoot
-    Expired & xx & xx & xx & xx & xx & xx\\
-    Wrong Host & xx & xx & xx & xx & xx & xx\\
-    Self Signed & xx & xx & xx & xx & xx & xx\\
-    Untrusted Root & xx & xx & xx & xx & xx & xx\\
-    Revoked & xx & xx & xx & xx & xx & xx\\
-    Pinning Test & xx & xx & xx & xx & xx & xx\\
-    No Common Name & xx & xx & xx & xx & xx & xx\\
-    No Subject & xx & xx & xx & xx & xx & xx\\
-    Incomplete Chain & xx & xx & xx & xx & xx & xx\\
-    SHA1 Intermediate & xx & xx & xx & xx & xx & xx\\
-    SHA256 & xx & xx & xx & xx & xx & xx\\
-    SHA384 & xx & xx & xx & xx & xx & xx\\
-    SHA512 & xx & xx & xx & xx & xx & xx\\
-    1000 Subject Alt Names & xx & xx & xx & xx & xx & xx\\
-    10000 Subject Alt Names & xx & xx & xx & xx & xx & xx\\
-    ECC256 & xx & xx & xx & xx & xx & xx\\
-    ECC384 & xx & xx & xx & xx & xx & xx\\
-    RSA2048 & xx & xx & xx & xx & xx & xx\\
-    RSA8192 & xx & xx & xx & xx & xx & xx\\
-    CBC & xx & xx & xx & xx & xx & xx\\
-    RC4-MD5 & xx & xx & xx & xx & xx & xx\\
-    RC4 & xx & xx & xx & xx & xx & xx\\
-    3DES & xx & xx & xx & xx & xx & xx\\
-    Null & xx & xx & xx & xx & xx & xx\\
-    DH480 & xx & xx & xx & xx & xx & xx\\
-    DH512 & xx & xx & xx & xx & xx & xx\\
-    DH1024 & xx & xx & xx & xx & xx & xx\\
-    DH2048 & xx & xx & xx & xx & xx & xx\\
-    DH Small Subgroup & xx & xx & xx & xx & xx & xx\\
-    DH Composite & xx & xx & xx & xx & xx & xx\\
-    Static RSA & xx & xx & xx & xx & xx & xx\\
-    Invalid Expected SCT & xx & xx & xx & xx & xx & xx\\
-    Superfish & xx & xx & xx & xx & xx & xx\\
-    eDellRoot & xx & xx & xx & xx & xx & xx\\
-    DSD Test Provider & xx & xx & xx & xx & xx & xx\\
-\end{longtable}
+    Expired & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
+    Wrong Host & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
+    Self Signed & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
+    Untrusted Root & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
+    Revoked & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG & \RejectedG\\
+    Pinning Test & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG & \RejectedG\\
+    No Common Name & Accepted & Accepted & Accepted & Accepted & Accepted & Accepted\\
+    No Subject & Accepted & Rejected & Accepted & Rejected & Accepted & Rejected\\
+    Incomplete Chain & \RejectedG & \AcceptedR & \RejectedG & \RejectedG & \AcceptedR & \AcceptedR\\
+    SHA1 Intermediate & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG & \RejectedG\\
+    1000 Subject Alt Names & \AcceptedG & \AcceptedG & \AcceptedG & \AcceptedG & \AcceptedG & \AcceptedG\\
+    10000 Subject Alt Names & \RejectedR & \AcceptedG & \RejectedR & \RejectedR & \RejectedR & \RejectedR\\
+    RC4-MD5 & \AcceptedR & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
+    RC4 & \AcceptedR & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
+    3DES & \AcceptedR & \AcceptedR & \RejectedG & \RejectedG & \AcceptedR & \AcceptedR\\
+    Null & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
+    DH480 & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
+    DH512 & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
+    DH1024 & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG\\
+    DH2048 & \AcceptedG & \AcceptedG & \AcceptedG & \AcceptedG & \AcceptedG & \AcceptedG\\
+    DH Small Subgroup & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG\\
+    DH Composite & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG\\
+    Static RSA & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR\\
+    Invalid Expected SCT & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG\\
+    Superfish & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
+    eDellRoot & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
+    DSD Test Provider & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
+\end{longtabu}
+\end{footnotesize}
 
 
 
