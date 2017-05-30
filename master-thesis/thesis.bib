@@ -24,6 +24,68 @@
   howpublished = {\url{https://opensource.googleblog.com/2009/03/thandy-secure-update-for-tor.html}}
 }
 
+@misc{must-staple,
+  author = {Steve Gibson},
+  title = {Security Certificate Revocation Awareness: The case for “OCSP Must-Staple”},
+  month = {April},
+  year = {2014},
+  publisher = {Gibson Research Corporation},
+  howpublished = {\url{https://www.grc.com/revocation/ocsp-must-staple.htm}}
+}
+
+@misc{onecrl,
+  author = {Mark Goodwin},
+  title = {Revoking Intermediate Certificates: Introducing OneCRL},
+  month = {March},
+  year = {2015},
+  publisher = {Mozilla},
+  howpublished = {\url{https://blog.mozilla.org/security/2015/03/03/revoking-intermediate-certificates-introducing-onecrl/}}
+}
+
+@misc{wget-bug,
+  author = {Tim R\"uhsen},
+  title = {Fix updating HSTS entries},
+  publisher = {wget},
+  howpublished = {\url{http://git.savannah.gnu.org/cgit/wget.git/commit/?id=57d748117ffa7bc66dedbfe8a93175a9585e2950}}
+}
+
+@misc{stackoverflow-certificate,
+  title = {Trusting all certificates using HttpClient over HTTPS},
+  publisher = {Stack Overflow},
+  howpublished = {\url{https://stackoverflow.com/questions/2642777/trusting-all-certificates-using-httpclient-over-https}}
+}
+
+@misc{crlsets,
+  author = {Google},
+  title = {CRLSets},
+  publisher = {Chromium Blog},
+  howpublished = {\url{https://dev.chromium.org/Home/chromium-security/crlsets}}
+}
+
+@misc{safe-browsing,
+  author = {Provos, Niels and Fette, Ian},
+  title = {All About Safe Browsing},
+  month = {January},
+  year = {2012},
+  publisher = {Google},
+  journal = {Chromium Blog},
+  howpublished = {\url{https://blog.chromium.org/2012/01/all-about-safe-browsing.html}}
+}
+
+@misc{hstspreload,
+  title = {HSTS Preload},
+  publisher = {Google},
+  howpublished = {\url{https://hstspreload.org/}}
+}
+
+@misc{sslstrip,
+  author = {Marlinspike, Moxie},
+  title = {New Tricks For Defeating SSL In Practice},
+  year = {2009},
+  publisher = {Black Hat},
+  howpublished = {\url{https://www.blackhat.com/presentations/bh-dc-09/Marlinspike/BlackHat-DC-09-Marlinspike-Defeating-SSL.pdf}}
+}
+
 @inproceedings{cappos2008look,
   title={A look in the mirror: Attacks on package managers},
   author={Cappos, Justin and Samuel, Justin and Baker, Scott and Hartman, John H},
@@ -33,17 +95,43 @@
   organization={ACM}
 }
 
+@inproceedings{improve-warnings,
+  title={Rethinking Connection Security Indicators},
+  author={Felt, Adrienne Porter and Reeder, Robert and Ainslie, Alex and Harris, Helen and Walker, Max and Thompson, Christopher and Acer, Mustafa and Morant, Elisabeth and Consolvo, Sunny},
+  booktitle={SOUPS},
+  month={June},
+  year={2016},
+  organization={USENIX}
+}
+
+@inproceedings{revocation-measurement,
+  title={An End-to-End Measurement of Certificate Revocation in the Web’s PKI},
+  author={Liu, Yabing and Tome, Will and Zhang, Liang and Choffnes, David and Levin, Dave and Maggs, Bruce and Mislove, Alan and Schulman, Aaron and Wilson, Christo},
+  booktitle={IMC},
+  month={October},
+  year={2015},
+  organization={ACM}
+}
+
 @inproceedings{pbfts,
   title={Practical Byzantine fault tolerance},
-  author={Castro, Miguel and Liskov, Barbara and others},
+  author={Castro, Miguel and Liskov, Barbara},
   booktitle={OSDI},
   month={February},
   year={1999}
 }
 
+@inproceedings{certshim,
+  title={Securing SSL Certificate Verification through Dynamic Linking},
+  author={Bates, Adam and Pletcher, Joe and Nichols, Tyler and Hollembaek, Braden and Tian, Dave and Butler, Kevin and Alkhelaifi, Abdulrahman},
+  booktitle={CCS},
+  month={November},
+  year={2014}
+}
+
 @inproceedings{dangerous,
   title={The Most Dangerous Code in the World: Validating SSL Certificates in Non-Browser Software},
-  author={Georgiev et al},
+  author={Georgiev, Martin and Iyengar, Subodh and Jana, Suman and Anubhai, Rishita and Boneh, Dan and Shmatikov, Vitaly},
   booktitle={CCS},
   month={October},
   year={2012}
@@ -423,4 +511,107 @@
   howpublished = {\url{https://twitter.com/realdonaldtrump/status/392990408843984897}},
   month={October},
   year =2013
+}
+
+@techreport{RFC2818,
+  author = {E. Rescorla},
+  title = {HTTP Over TLS},
+  howpublished = {Internet Requests for Comments},
+  type = {RFC},
+  number = {2818},
+  year = {2000},
+  month = {May},
+  issn = {2070-1721},
+  publisher = {RFC Editor},
+  institution = {RFC Editor},
+  url = {http://www.rfc-editor.org/rfc/rfc2818.txt},
+  note = {\url{http://www.rfc-editor.org/rfc/rfc2818.txt}},
+}
+
+@techreport{RFC5246,
+  author = {T. Dierks and E. Rescorla},
+  title = {The Transport Layer Security (TLS) Protocol Version 1.2},
+  howpublished = {Internet Requests for Comments},
+  type = {RFC},
+  number = {5246},
+  year = {2008},
+  month = {August},
+  issn = {2070-1721},
+  publisher = {RFC Editor},
+  institution = {RFC Editor},
+  url = {http://www.rfc-editor.org/rfc/rfc5246.txt},
+  note = {\url{http://www.rfc-editor.org/rfc/rfc5246.txt}},
+}
+
+@techreport{RFC6797,
+  author = {J. Hodges and C. Jackson and A. Barth},
+  title = {HTTP Strict Transport Security (HSTS)},
+  howpublished = {Internet Requests for Comments},
+  type = {RFC},
+  number = {6797},
+  year = {2012},
+  month = {November},
+  issn = {2070-1721},
+  publisher = {RFC Editor},
+  institution = {RFC Editor},
+  url = {http://www.rfc-editor.org/rfc/rfc6797.txt},
+  note = {\url{http://www.rfc-editor.org/rfc/rfc6797.txt}},
+}
+
+@techreport{RFC7469,
+  author = {C. Evans and C. Palmer and R. Sleevi},
+  title = {Public Key Pinning Extension for HTTP},
+  howpublished = {Internet Requests for Comments},
+  type = {RFC},
+  number = {7469},
+  year = {2015},
+  month = {April},
+  issn = {2070-1721},
+  publisher = {RFC Editor},
+  institution = {RFC Editor},
+  url = {http://www.rfc-editor.org/rfc/rfc7469.txt},
+  note = {\url{http://www.rfc-editor.org/rfc/rfc7469.txt}},
+}
+
+@techreport{RFC6962,
+  author = {B. Laurie and A. Langley and E. Kasper},
+  title = {Certificate Transparency},
+  howpublished = {Internet Requests for Comments},
+  type = {RFC},
+  number = {6962},
+  year = {2013},
+  month = {June},
+  issn = {2070-1721},
+  publisher = {RFC Editor},
+  institution = {RFC Editor},
+}
+
+@techreport{RFC5280,
+  author = {D. Cooper and S. Santesson and S. Farrell and S. Boeyen and R. Housley and W. Polk},
+  title = {Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile},
+  howpublished = {Internet Requests for Comments},
+  type = {RFC},
+  number = {5280},
+  year = {2008},
+  month = {May},
+  issn = {2070-1721},
+  publisher = {RFC Editor},
+  institution = {RFC Editor},
+  url = {http://www.rfc-editor.org/rfc/rfc5280.txt},
+  note = {\url{http://www.rfc-editor.org/rfc/rfc5280.txt}},
+}
+
+@techreport{RFC6066,
+  author = {D. Eastlake},
+  title = {Transport Layer Security (TLS) Extensions: Extension Definitions},
+  howpublished = {Internet Requests for Comments},
+  type = {RFC},
+  number = {6066},
+  year = {2011},
+  month = {January},
+  issn = {2070-1721},
+  publisher = {RFC Editor},
+  institution = {RFC Editor},
+  url = {http://www.rfc-editor.org/rfc/rfc6066.txt},
+  note = {\url{http://www.rfc-editor.org/rfc/rfc6066.txt}},
 }

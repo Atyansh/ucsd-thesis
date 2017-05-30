@@ -6,17 +6,19 @@
 
 Transport Layer Security (TLS) is a cryptographic protocol designed to provide
 end-to-end communication security between two parties, even in the presence of
-active man-in-the-middle adversaries. It has since become the standard for
-providing secure communication on the Internet and is used for several
-sensitive applications such as banking, email, instant messaging, shopping,
-etc. Usage of TLS is most commonly seen in securing web traffic in the form of
-HTTPS. When implemented correctly, HTTPS guarantees confidentiality, integrity,
-and authenticity of all web communication between two parties. Further, there
-are additional mechanisms such as \emph{strict transport security} (HSTS),
-\emph{public key pinning} (HPKP), \emph{online certificate status protocol}
-(OCSP) stapling, and \emph{certificate transparency} (CT), that improve the
-security of HTTPS. However implementing HTTPS and all the supporting security
-mechanisms correctly has proven to be a challenge for most applications.
+active man-in-the-middle adversaries\cite{RFC5246}. It has since become the
+standard for providing secure communication on the Internet and is used for
+several sensitive applications such as banking, email, instant messaging,
+shopping, etc. Usage of TLS is most commonly seen in securing web traffic in
+the form of HTTPS\cite{RFC2818}. When implemented correctly, HTTPS guarantees
+confidentiality, integrity, and authenticity of all web communication between
+two parties. Further, there are additional mechanisms such as \emph{strict
+transport security} (HSTS)\cite{RFC6797}, \emph{public key pinning}
+(HPKP)\cite{RFC7469}, \emph{online certificate status protocol} (OCSP)
+stapling, and \emph{certificate transparency} (CT)\cite{RFC6962}, that improve
+the security of HTTPS. However implementing HTTPS and all the supporting
+security mechanisms correctly has proven to be a challenge for most
+applications.
 
 While browsers are not free from TLS bugs, they have been patched over time
 through extensive amounts of penetration testing. They have further been the
@@ -31,9 +33,9 @@ provide the impression of giving security to the user, but they fail to live up
 to that promise. We find that browsers such as Chrome and Firefox implement not
 only secure validation of TLS certificates in general, implement mechanisms
 such as HSTS, HPKP, and verification of revoked certificates, but also have
-dynamic protection against identified malware and dangerous binaries. They are
-also better at displaying security warnings to the user in a transparent
-manner.
+dynamic protection against identified malware and dangerous
+binaries\cite{safe-browsing}. They are also better at displaying security
+warnings to the user in a transparent manner.
 
 The issues with improper implementation of TLS for non-browser applications are
 due to both the complexity of the protocol, lack of general understanding of
@@ -78,7 +80,7 @@ mechanisms that harden the HTTPS ecosystem.
 \subsection{TLS}
 Transport Layer Security (TLS) is a cryptographic protocol that has been
 established as the standard method of secure, encrypted communication over the
-Internet. TLS aims to provide \emph{Authenticated Encryption} which requires the
+Internet\cite{RFC5246}. TLS aims to provide \emph{Authenticated Encryption} which requires the
 following key properties-
 \begin{itemize}
   \item \textbf{Confidentiality:} All communication between two parties is
@@ -100,21 +102,21 @@ to provide end-to-end security.
 
 \subsection{HTTPS}
 HTTPS (or "HTTP over TLS") is a protocol which secures HTTP traffic within a
-connection encrypted by the TLS protocol. It is mainly used for authenticating
-a website and securing communication between the website and its users. This is
-done with the use of server certificates in TLS. In a normal HTTPS connection,
-when a client makes a request over HTTPS to some website, the server presents
-the client with a certificate signed by some certificate authority. This certificate
-authority may not directly be trusted by the client but in turn may be trusted by
-another entity that the client may trust. The server also responds with a chain of
-trust listing all the CAs that are part of the chain connecting to a root CA that
-the client trusts.
+connection encrypted by the TLS protocol\cite{RFC2818}. It is mainly used for
+authenticating a website and securing communication between the website and its
+users. This is done with the use of server certificates in TLS\cite{RFC5280}.
+In a normal HTTPS connection, when a client makes a request over HTTPS to some
+website, the server presents the client with a certificate signed by some
+certificate authority. This certificate authority may not directly be trusted
+by the client but in turn may be trusted by another entity that the client may
+trust. The server also responds with a chain of trust listing all the CAs that
+are part of the chain connecting to a root CA that the client trusts.
 
-A client needs to validate the certificate's credentials and
-determine the validity of the certificate. A client may find the certificate to be
-invalid in cases when it's expired, has an mis-matching common name field, revoked,
-uses a weak signature algorithm, etc. We list several different types of client
-behavior for certificates in the appendix.
+A client needs to validate the certificate's credentials and determine the
+validity of the certificate. A client may find the certificate to be invalid in
+cases when it's expired, has an mis-matching common name field, revoked, uses a
+weak signature algorithm, etc. We list several different types of client
+behavior for certificates in \Cref{tab:results-table-saber} in the appendix.
 
 \subsection{Strict Transport Security}
 While HTTPS protects users from active man-in-the-middle attackers, the
@@ -131,29 +133,29 @@ that it serves, an active man-in-the-middle attacker could intercept that
 redirect and replace it with a forged accept response pretending to be the
 server. As a result, the attacker could make it so that the client never
 actually switches to an HTTPS connection and remains vulnerable. This class of
-attacks is commonly known as \emph{SSL Stripping}.
+attacks is commonly known as \emph{SSL Stripping}\cite{sslstrip}.
 
 To combat this problem, servers now serve \emph{Strict-Transport-Security}
 HTTPS header as part of the response that instructs the client to only visit
-the website over HTTPS connection. A client that respects this HSTS policy
-would automatically upgrade all HTTP requests made by the user to HTTPS before
-sending the request over the network. As long as the client can guarantee a
-secure connection with a domain once and receive an HSTS header, all future
-communication within a designated timeframe that domain is protected. HSTS
-headers also need to provide a \emph{max-age} policy that determines how long
-a client enforces the HSTS policy. This policy is continuously updated every
-time an HSTS header is received, so if a client visits the same website again
-within the expiry period, the client stays protected. Otherwise, the client
-loses protection when the max-age policy expires and protection is resumed once
-the client receives a fresh HSTS header from securely connecting to the domain
-again.
+the website over HTTPS connection\cite{RFC6797}. A client that respects this
+HSTS policy would automatically upgrade all HTTP requests made by the user to
+HTTPS before sending the request over the network. As long as the client can
+guarantee a secure connection with a domain once and receive an HSTS header,
+all future communication within a designated timeframe that domain is
+protected. HSTS headers also need to provide a \emph{max-age} policy that
+determines how long a client enforces the HSTS policy. This policy is
+continuously updated every time an HSTS header is received, so if a client
+visits the same website again within the expiry period, the client stays
+protected. Otherwise, the client loses protection when the max-age policy
+expires and protection is resumed once the client receives a fresh HSTS header
+from securely connecting to the domain again.
 
 HSTS relies on the \emph{Trust On First Use} (TOFU) principle to harden
 protection. Today, browsers actually ship with preloaded list of domains that
 have HSTS protection turned on by default so that users gain HSTS protection
 even before they establish a single secure connection. Any domain owner can
 apply to be a part of this list and the process has seen significant adoption
-since it was automated by chrome.
+since it was automated by chrome\cite{hstspreload}.
 
 
 \subsection{Public Key Pinning}
@@ -175,7 +177,7 @@ complete \emph{Subject Public Key Info} field of a certificate for each public
 that the domain owner wishes to use to establish a TLS connection. A client
 that respects the HPKP policy must ensure that while establishing a TLS
 connection with a website for which there is a cached HPKP entry, at least one
-key in the certificate chain matches a key stored in the pin set.
+key in the certificate chain matches a key stored in the pin set\cite{RFC7469}.
 
 This allows a domain owner to pin only the public keys that they trust. In the
 case that the owner chooses to only pin leaf-level keys generated by the owner
@@ -198,40 +200,41 @@ In the case that a domain's private key gets leaked (due to server compromise,
 phishing, etc.) any certificates that were issued for the corresponding public
 key need to be revoked. Both registering a certificate as revoked and checking
 the revocation status of a certificate have been tricky challenges for the
-server and client respectively.
+server and client respectively\cite{revocation-measurement}.
 
 One way for checking revoked certificates is to maintain a Certificate
 Revocation List (CRL) for all revoked certificates which the clients could use
-to validate the certificate. This list needs to be continuously updated with
-the latest revocations and clients need to be able to check the revocation
-status of a certificate dynamically. In a situation where a client is unable to
-access the revocation list (for example if an adversary runs a denial of
-service attack against the server hosting the revocation list), then no further
-operations that depend upon the validation of the certificate can take place.
+to validate the certificate\cite{RFC5280}. This list needs to be continuously
+updated with the latest revocations and clients need to be able to check the
+revocation status of a certificate dynamically. In a situation where a client
+is unable to access the revocation list (for example if an adversary runs a
+denial of service attack against the server hosting the revocation list), then
+no further operations that depend upon the validation of the certificate can
+take place.
 
 Online Certificate Status Protocol (OCSP) is an Internet protocol used to
-communicate the revocation status of x509 certificates. The protocol works
-similarly to CRLs but require less bandwidth on the client. A client requests
-the status of a certificate from an OCSP server, which responds whether the
-certificate is revoked or not. OCSP still has the same denial of service issues
-as CRLs and many clients tend to accept a certificate if they cannot
-successfully get an OCSP response. To address this issue, the original server
-that presents the certificate can make a request to the OCSP server and staple
-the OCSP response along with the original certificate, which the client can
-verify offline. This is known as OCSP stapling and many web servers support it
-today (although only about 9\% of TLS connections use it as of 2015).
+communicate the revocation status of x509 certificates\cite{RFC6066}. The
+protocol works similarly to CRLs but require less bandwidth on the client. A
+client requests the status of a certificate from an OCSP server, which responds
+whether the certificate is revoked or not. OCSP still has the same denial of
+service issues as CRLs and many clients tend to accept a certificate if they
+cannot successfully get an OCSP response. To address this issue, the original
+server that presents the certificate can make a request to the OCSP server and
+staple the OCSP response along with the original certificate, which the client
+can verify offline. This is known as OCSP stapling and many web servers support
+it today (although only about 9\% of TLS connections use it as of 2015).
 
 Despite OCSP stapling, an attacker that can compromise a server can simply
 serve the certificate without a stapled OCSP response which the client may
 accept. Website owners therefore have an option to issue a certificate with a
-"Must-Staple" flag. If a client sees this flag in the certificate, the client
-must not accept the certificate without a stapled response. This is respected
-by chrome and firefox.
+"Must-Staple" flag\cite{must-staple}. If a client sees this flag in the
+certificate, the client must not accept the certificate without a stapled
+response. This is respected by chrome and firefox.
 
 Chrome and firefox have also introduced offline CRLs that they push to user's
-browsers during updates. This is primarily used for serious incidents (say if
-an intermediate CA gets compromised) to push emergency updates to the CRLs
-maintained by the client.
+browsers during updates\cite{onecrl}\cite{crlsets}. This is primarily used for
+serious incidents (say if an intermediate CA gets compromised) to push
+emergency updates to the CRLs maintained by the client.
 
 
 \section{Issues with non-browsers}
@@ -242,7 +245,7 @@ options in TLS libraries are difficult to understand. Several non-browser
 softwares have been shown to be insecure against a network not due to using the
 an incorrect protocol, or a broken library, but rather due to incorrect
 certificate validation arising out of mistakes when configuring SSL options for
-their application.
+their application\cite{dangerous}.
 
 Further, even a correct implementation of TLS does not protect these
 applications from SSL stripping, rogue certificates, and revocations, unless
@@ -261,7 +264,8 @@ continuity policy of HSTS which is supposed to maintain a secure HSTS entry as
 long as user visits the domain frequently (i.e. within the specified max-age
 period). If a domain provides an HSTS max-age policy of 1 day, then the wget
 client would be vulnerable to interception at least once a day even if the
-developer visits the domain multiple times within that period.
+developer visits the domain multiple times within that period. We reported this
+issue to wget which was then promptly fixed\cite{wget-bug}.
 
 \subsection{Why do these problems exist?}
 
@@ -282,26 +286,26 @@ configuration mistakes would be difficult to eliminate since developers quite
 often do not have the security expertise to understand mistake. This can be
 seen by comments from developers on stack overflow, with one particular
 response suggesting disabling certificate validation being a top answer with
-hundreds of votes.
+hundreds of votes\cite{stackoverflow-certificate}.
 
 \subsection{Non-browsers have a representation issue}
 Due to the nature of several non-browser applications and their lack of a
 graphical user interface, they do not convey the same information about the
 security of the connection to the user as browsers do. There has been a lot of
 work involved in displaying appropriate security warnings to the user when a
-certificate error occurs. Further, the "green lock" symbol is also a useful
-indicator for users that informs them of the security of their connection to
-some website. All of these advantages are application specific and usually
-exclusive to browsers.
+certificate error occurs\cite{improve-warnings}. Further, the "green lock"
+symbol is also a useful indicator for users that informs them of the security
+of their connection to some website. All of these advantages are application
+specific and usually exclusive to browsers.
 
 Redirects, in particular, can be easily overlooked without appropriate
 indicators. An https to http redirect may be considered acceptable behavior for
 a browser since the user can look for insecure connection indicators next to
 the url. This behavior however may not be appropriate for an application like
-wget. In the case of such a redirect, wget would follow the redirect and download
-the webpage. The redirect to http is easily overlooked by an average user.
-Considering the original request was for an https url, the user's security
-may have been undermined without the knowledge of the user.
+wget. In the case of such a redirect, wget would follow the redirect and
+download the webpage. The redirect to http is easily overlooked by an average
+user. Considering the original request was for an https url, the user's
+security may have been undermined without the knowledge of the user.
 
 
 \section{Delegating connection security to browser}
@@ -312,14 +316,15 @@ to use the TLS protocol for web security but does not require the expertise
 needed to implement TLS verification correctly. We achieve this by delegating
 the actual network request/response handling to chrome. Instead of directly
 interfacing with TLS, all requests are forwarded to chrome, which would handle
-proper certificate checking on behalf of the application. This allows non-browser
-applications to capitalize on the security, reliability, and update frequency of
-chrome, while only having to worry about the correctness of application layer
-logic.
+proper certificate checking on behalf of the application. This allows
+non-browser applications to capitalize on the security, reliability, and update
+frequency of chrome, while only having to worry about the correctness of
+application layer logic.
 
-Further, since chrome also implements HSTS, HPKP, revocation verification, non-browser
-applications gain all of these for free as well. Chrome also provides protection
-from websites marked as containing malware, phishing attacks, dangerous binaries, etc.
+Further, since chrome also implements HSTS, HPKP, revocation verification,
+non-browser applications gain all of these for free as well. Chrome also
+provides protection from websites marked as containing malware, phishing
+attacks, dangerous binaries, etc.
 
 \subsection{Remote debugging protocol}
 We built a prototype version of \emph{wget} that we discuss in
@@ -329,8 +334,8 @@ other applications to communicate with it over a web socket. It's mainly been
 used for debugging chrome, however since it allows a client to inspect chrome,
 we use it to issue network requests and fetch responses. Since the network
 request is made by chrome, it performs all the usual HTTPS security checks and
-the request only succeeds if the connection is secure. \Cref{fig:prototype-saber}
-shows the design for this approach.
+the request only succeeds if the connection is secure.
+\Cref{fig:prototype-saber} shows the design for this approach.
 
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{figures/prototype}
@@ -398,7 +403,7 @@ least as restrictive as chrome by default (although we can manually increase or
 decrease restrictions based on what the application requires). This also
 includes protection from revoked certificates, something which wget does not
 provide today. A full list of our certificate testing for various applications
-can be found in the appendix.
+can be found in \Cref{tab:results-table-saber} in the appendix.
 
 \begin{figure}[h]
   \includegraphics[width=\textwidth]{figures/cert-error}
@@ -495,9 +500,18 @@ protections. We assume that, the central client (chrome) is a trusted entity.
 \section{Conclusion}
 \label{sec:conclusion-saber}
 
-Our successful implementation of swget shows that this is a feasible strategy
-of building non-browser applications that require connection security without
-interfacing directly with a TLS library.
+Today, non-browser applications are weak to network adversaries in ways that
+browsers aren't. Our successful implementation of swget shows that this is a
+feasible strategy of building non-browser applications that require connection
+security without interfacing directly with a TLS library.
+
+Another approach involves retro-fitting implementations of SSL Libraries
+through dynamic linking\cite{certshim}. The benefits of this approach is that
+it doesn't require existing applications to be changed. However, this mechanism
+only improves proper certificate validation, but doesn't provide further
+protections such as malware detection, HSTS upgrade, browser maintained CRLs,
+etc. In contrast, our approach also address protection sharing across clients
+through a centralized protection mechanism.
 
 \section{Acknowledgements}
 \label{sec:acknowledgement-saber}

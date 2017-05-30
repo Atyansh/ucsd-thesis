@@ -1,8 +1,14 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
 \begin{thebibliography}{KTADC16}
 
-\bibitem[CL{\etalchar{+}}99]{pbfts}
-Miguel Castro, Barbara Liskov, et~al.
+\bibitem[BPN{\etalchar{+}}14]{certshim}
+Adam Bates, Joe Pletcher, Tyler Nichols, Braden Hollembaek, Dave Tian, Kevin
+  Butler, and Abdulrahman Alkhelaifi.
+\newblock Securing ssl certificate verification through dynamic linking.
+\newblock In {\em CCS}, November 2014.
+
+\bibitem[CL99]{pbfts}
+Miguel Castro and Barbara Liskov.
 \newblock Practical byzantine fault tolerance.
 \newblock In {\em OSDI}, February 1999.
 
@@ -18,16 +24,35 @@ Justin Cappos, Justin Samuel, Scott Baker, and John~H Hartman.
 \newblock A look in the mirror: Attacks on package managers.
 \newblock In {\em CCS}. ACM, 2008.
 
+\bibitem[CSF{\etalchar{+}}08]{RFC5280}
+D.~Cooper, S.~Santesson, S.~Farrell, S.~Boeyen, R.~Housley, and W.~Polk.
+\newblock Internet x.509 public key infrastructure certificate and certificate
+  revocation list (crl) profile.
+\newblock RFC 5280, RFC Editor, May 2008.
+\newblock \url{http://www.rfc-editor.org/rfc/rfc5280.txt}.
+
 \bibitem[dav17]{registry-static}
 davglass.
 \newblock registry-static.
 \newblock \url{https://www.npmjs.com/package/registry-static}, January 2017.
 
-\bibitem[ea12]{dangerous}
-Georgiev et~al.
-\newblock The most dangerous code in the world: Validating ssl certificates in
-  non-browser software.
-\newblock In {\em CCS}, October 2012.
+\bibitem[DR08]{RFC5246}
+T.~Dierks and E.~Rescorla.
+\newblock The transport layer security (tls) protocol version 1.2.
+\newblock RFC 5246, RFC Editor, August 2008.
+\newblock \url{http://www.rfc-editor.org/rfc/rfc5246.txt}.
+
+\bibitem[Eas11]{RFC6066}
+D.~Eastlake.
+\newblock Transport layer security (tls) extensions: Extension definitions.
+\newblock RFC 6066, RFC Editor, January 2011.
+\newblock \url{http://www.rfc-editor.org/rfc/rfc6066.txt}.
+
+\bibitem[EPS15]{RFC7469}
+C.~Evans, C.~Palmer, and R.~Sleevi.
+\newblock Public key pinning extension for http.
+\newblock RFC 7469, RFC Editor, April 2015.
+\newblock \url{http://www.rfc-editor.org/rfc/rfc7469.txt}.
 
 \bibitem[Eva13]{rubygems-reg-comp}
 Evan.
@@ -42,6 +67,38 @@ Steve Evans.
   \url{https://www.infosecurity-magazine.com/news/malicious-apps-found-in-google},
   September 2016.
 
+\bibitem[FRA{\etalchar{+}}16]{improve-warnings}
+Adrienne~Porter Felt, Robert Reeder, Alex Ainslie, Helen Harris, Max Walker,
+  Christopher Thompson, Mustafa Acer, Elisabeth Morant, and Sunny Consolvo.
+\newblock Rethinking connection security indicators.
+\newblock In {\em SOUPS}. USENIX, June 2016.
+
+\bibitem[Gib14]{must-staple}
+Steve Gibson.
+\newblock Security certificate revocation awareness: The case for “ocsp
+  must-staple”.
+\newblock \url{https://www.grc.com/revocation/ocsp-must-staple.htm}, April
+  2014.
+
+\bibitem[GIJ{\etalchar{+}}12]{dangerous}
+Martin Georgiev, Subodh Iyengar, Suman Jana, Rishita Anubhai, Dan Boneh, and
+  Vitaly Shmatikov.
+\newblock The most dangerous code in the world: Validating ssl certificates in
+  non-browser software.
+\newblock In {\em CCS}, October 2012.
+
+\bibitem[Goo]{crlsets}
+Google.
+\newblock Crlsets.
+\newblock \url{https://dev.chromium.org/Home/chromium-security/crlsets}.
+
+\bibitem[Goo15]{onecrl}
+Mark Goodwin.
+\newblock Revoking intermediate certificates: Introducing onecrl.
+\newblock
+  \url{https://blog.mozilla.org/security/2015/03/03/revoking-intermediate-certificates-introducing-onecrl/},
+  March 2015.
+
 \bibitem[Goo16]{googleplay-root}
 Dan Goodin.
 \newblock {“Godless” apps, some found in Google Play, can root 90% of
@@ -49,6 +106,16 @@ Dan Goodin.
 \newblock
   \url{http://arstechnica.com/security/2016/06/godless-apps-some-found-in-google-play-root-90-of-android-phones/},
   June 2016.
+
+\bibitem[HJB12]{RFC6797}
+J.~Hodges, C.~Jackson, and A.~Barth.
+\newblock Http strict transport security (hsts).
+\newblock RFC 6797, RFC Editor, November 2012.
+\newblock \url{http://www.rfc-editor.org/rfc/rfc6797.txt}.
+
+\bibitem[hst]{hstspreload}
+Hsts preload.
+\newblock \url{https://hstspreload.org/}.
 
 \bibitem[Key17]{keybase}
 Keybase.
@@ -66,6 +133,25 @@ Trishank~Karthik Kuppusamy, Santiago Torres-Arias, Vladimir Diaz, and Justin
   Cappos.
 \newblock Diplomat: Using delegations to protect community repositories.
 \newblock In {\em NSDI}, March 2016.
+
+\bibitem[LLK13]{RFC6962}
+B.~Laurie, A.~Langley, and E.~Kasper.
+\newblock Certificate transparency.
+\newblock RFC 6962, RFC Editor, June 2013.
+
+\bibitem[LTZ{\etalchar{+}}15]{revocation-measurement}
+Yabing Liu, Will Tome, Liang Zhang, David Choffnes, Dave Levin, Bruce Maggs,
+  Alan Mislove, Aaron Schulman, and Christo Wilson.
+\newblock An end-to-end measurement of certificate revocation in the web’s
+  pki.
+\newblock In {\em IMC}. ACM, October 2015.
+
+\bibitem[Mar09]{sslstrip}
+Moxie Marlinspike.
+\newblock New tricks for defeating ssl in practice.
+\newblock
+  \url{https://www.blackhat.com/presentations/bh-dc-09/Marlinspike/BlackHat-DC-09-Marlinspike-Defeating-SSL.pdf},
+  2009.
 
 \bibitem[Mat09]{thandy}
 Nick Mathewson.
@@ -125,6 +211,12 @@ NPM.
   \url{http://blog.npmjs.org/post/141702881055/package-install-scripts-vulnerability},
   March 2016.
 
+\bibitem[PF12]{safe-browsing}
+Niels Provos and Ian Fette.
+\newblock All about safe browsing.
+\newblock \url{https://blog.chromium.org/2012/01/all-about-safe-browsing.html},
+  January 2012.
+
 \bibitem[pos13]{github-rubygems}
 postmodern.
 \newblock {Add safe\_load \#119}.
@@ -135,6 +227,18 @@ postmodern.
 {Python Software Foundation}.
 \newblock {PyPI} - the {P}ython package index.
 \newblock \url{https://pypi.python.org/pypi}, January 2017.
+
+\bibitem[R\"]{wget-bug}
+Tim R\"uhsen.
+\newblock Fix updating hsts entries.
+\newblock
+  \url{http://git.savannah.gnu.org/cgit/wget.git/commit/?id=57d748117ffa7bc66dedbfe8a93175a9585e2950}.
+
+\bibitem[Res00]{RFC2818}
+E.~Rescorla.
+\newblock Http over tls.
+\newblock RFC 2818, RFC Editor, May 2000.
+\newblock \url{http://www.rfc-editor.org/rfc/rfc2818.txt}.
 
 \bibitem[SC07]{frontrunning}
 ICANN Security and Stability~Advisory Committee.
@@ -160,6 +264,11 @@ Cristian-Alexandru Staicu, Michael Pradel, and Benjamin Livshits.
   js.
 \newblock Technical Report TUD-CS-2016-14663, TU Darmstadt, Department of
   Computer Science, November 2016.
+
+\bibitem[sta]{stackoverflow-certificate}
+Trusting all certificates using httpclient over https.
+\newblock
+  \url{https://stackoverflow.com/questions/2642777/trusting-all-certificates-using-httpclient-over-https}.
 
 \bibitem[Ste16]{shrink}
 Deian Stefan.
