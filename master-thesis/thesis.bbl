@@ -36,17 +36,16 @@ davglass.
 \newblock registry-static.
 \newblock \url{https://www.npmjs.com/package/registry-static}, January 2017.
 
+\bibitem[DKBH13]{https-ecosystem}
+Zakir Durumeric, James Kasten, Michael Bailey, and J.~Alex Halderman.
+\newblock Analysis of the https certificate ecosystem.
+\newblock In {\em IMC}. ACM, October 2013.
+
 \bibitem[DR08]{RFC5246}
 T.~Dierks and E.~Rescorla.
 \newblock The transport layer security (tls) protocol version 1.2.
 \newblock RFC 5246, RFC Editor, August 2008.
 \newblock \url{http://www.rfc-editor.org/rfc/rfc5246.txt}.
-
-\bibitem[Eas11]{RFC6066}
-D.~Eastlake.
-\newblock Transport layer security (tls) extensions: Extension definitions.
-\newblock RFC 6066, RFC Editor, January 2011.
-\newblock \url{http://www.rfc-editor.org/rfc/rfc6066.txt}.
 
 \bibitem[EPS15]{RFC7469}
 C.~Evans, C.~Palmer, and R.~Sleevi.
@@ -66,6 +65,11 @@ Steve Evans.
 \newblock
   \url{https://www.infosecurity-magazine.com/news/malicious-apps-found-in-google},
   September 2016.
+
+\bibitem[FA13]{warningland}
+Adrienne~Porter Felt and Devdatta Akhawe.
+\newblock Alice in warningland.
+\newblock In {\em USENIX}. USENIX, 2013.
 
 \bibitem[FRA{\etalchar{+}}16]{improve-warnings}
 Adrienne~Porter Felt, Robert Reeder, Alex Ainslie, Helen Harris, Max Walker,
@@ -145,6 +149,14 @@ Yabing Liu, Will Tome, Liang Zhang, David Choffnes, Dave Levin, Bruce Maggs,
 \newblock An end-to-end measurement of certificate revocation in the web’s
   pki.
 \newblock In {\em IMC}. ACM, October 2015.
+
+\bibitem[MAM{\etalchar{+}}99]{RFC2560}
+Michael Myers, Rich Ankney, Ambarish Malpani, Slava Galperin, and Carlisle
+  Adams.
+\newblock X.509 internet public key infrastructure online certificate status
+  protocol - ocsp.
+\newblock RFC 2560, RFC Editor, June 1999.
+\newblock \url{http://www.rfc-editor.org/rfc/rfc2560.txt}.
 
 \bibitem[Mar09]{sslstrip}
 Moxie Marlinspike.
@@ -228,17 +240,17 @@ postmodern.
 \newblock {PyPI} - the {P}ython package index.
 \newblock \url{https://pypi.python.org/pypi}, January 2017.
 
-\bibitem[R\"]{wget-bug}
-Tim R\"uhsen.
-\newblock Fix updating hsts entries.
-\newblock
-  \url{http://git.savannah.gnu.org/cgit/wget.git/commit/?id=57d748117ffa7bc66dedbfe8a93175a9585e2950}.
-
 \bibitem[Res00]{RFC2818}
 E.~Rescorla.
 \newblock Http over tls.
 \newblock RFC 2818, RFC Editor, May 2000.
 \newblock \url{http://www.rfc-editor.org/rfc/rfc2818.txt}.
+
+\bibitem[Ruh]{wgetbug}
+Tim Ruhsen.
+\newblock Fix updating hsts entries.
+\newblock
+  \url{http://git.savannah.gnu.org/cgit/wget.git/commit/?id=57d748117ffa7bc66dedbfe8a93175a9585e2950}.
 
 \bibitem[SC07]{frontrunning}
 ICANN Security and Stability~Advisory Committee.
@@ -264,6 +276,12 @@ Cristian-Alexandru Staicu, Michael Pradel, and Benjamin Livshits.
   js.
 \newblock Technical Report TUD-CS-2016-14663, TU Darmstadt, Department of
   Computer Science, November 2016.
+
+\bibitem[SS12]{commercial-government}
+Christopher Soghoian and Sid Stamm.
+\newblock Certified lies: Detecting and defeating government interception
+  attacks against ssl.
+\newblock In {\em Financial Cryptography and Data Security}. IFCA, 2012.
 
 \bibitem[sta]{stackoverflow-certificate}
 Trusting all certificates using httpclient over https.

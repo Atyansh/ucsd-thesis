@@ -115,6 +115,7 @@
 \usepackage{color}
 \usepackage{scrextend}
 \usepackage{pslatex}
+\usepackage{float}
 \usepackage{graphicx}
 \usepackage{tabu}
 \usepackage{tabularx}
@@ -321,69 +322,9 @@
 
 
 %% APPENDIX
-\appendix
-\label{app:results}
-\chapter{Results}
-\begin{footnotesize}
-\begin{longtabu} to \textwidth {||c | c c c c c c ||}
-  \caption[Certificate error testing]{Behavior of different clients when
-  presented with different certificates. A green entry indicates that behavior
-  is safe. A red entry indicates that the behavior is not ideal.}
-  \label{tab:results-table-saber} \\
-  \hline \multicolumn{1}{||c|}{\textbf{Certificate}} &
-         \multicolumn{1}{c}{\textbf{wget}} &
-         \multicolumn{1}{c}{\textbf{curl}} &
-         \multicolumn{1}{c}{\textbf{python}} &
-         \multicolumn{1}{c}{\textbf{node}} &
-         \multicolumn{1}{c}{\textbf{firefox}} &
-         \multicolumn{1}{c||}{\textbf{chrome}} \\ \hline 
-  \endfirsthead
-
-  \multicolumn{7}{c}%
-  {{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
-  \hline \multicolumn{1}{||c|}{\textbf{Certificate}} &
-         \multicolumn{1}{c}{\textbf{wget}} &
-         \multicolumn{1}{c}{\textbf{curl}} &
-         \multicolumn{1}{c}{\textbf{python}} &
-         \multicolumn{1}{c}{\textbf{node}} &
-         \multicolumn{1}{c}{\textbf{firefox}} &
-         \multicolumn{1}{c||}{\textbf{chrome}} \\ \hline 
-  \endhead
-
-  \hline \multicolumn{7}{|r|}{{Continued on next page}} \\ \hline
-  \endfoot
-
-  \hline \hline
-  \endlastfoot
-    Expired & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
-    Wrong Host & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
-    Self Signed & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
-    Untrusted Root & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
-    Revoked & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG & \RejectedG\\
-    Pinning Test & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG & \RejectedG\\
-    No Common Name & Accepted & Accepted & Accepted & Accepted & Accepted & Accepted\\
-    No Subject & Accepted & Rejected & Accepted & Rejected & Accepted & Rejected\\
-    Incomplete Chain & \RejectedG & \AcceptedR & \RejectedG & \RejectedG & \AcceptedR & \AcceptedR\\
-    SHA1 Intermediate & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG & \RejectedG\\
-    1000 Subject Alt Names & \AcceptedG & \AcceptedG & \AcceptedG & \AcceptedG & \AcceptedG & \AcceptedG\\
-    10000 Subject Alt Names & \RejectedR & \AcceptedG & \RejectedR & \RejectedR & \RejectedR & \RejectedR\\
-    RC4-MD5 & \AcceptedR & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
-    RC4 & \AcceptedR & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
-    3DES & \AcceptedR & \AcceptedR & \RejectedG & \RejectedG & \AcceptedR & \AcceptedR\\
-    Null & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
-    DH480 & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
-    DH512 & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
-    DH1024 & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG\\
-    DH2048 & \AcceptedG & \AcceptedG & \AcceptedG & \AcceptedG & \AcceptedG & \AcceptedG\\
-    DH Small Subgroup & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG\\
-    DH Composite & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG\\
-    Static RSA & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR\\
-    Invalid Expected SCT & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \AcceptedR & \RejectedG\\
-    Superfish & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
-    eDellRoot & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
-    DSD Test Provider & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG & \RejectedG\\
-\end{longtabu}
-\end{footnotesize}
+%\appendix
+%\label{app:results}
+%\chapter{Results}
 
 
 
